@@ -1,0 +1,18 @@
+SMAP
+JSPTemplate_jsp.java
+JSP
+*S JSP
+*F
++ 0 JSPTemplate.jsp
+JSPTemplate.jsp
++ 1 Header.html
+resources/Header.html
++ 2 NavBarTemplate.html
+resources/NavBarTemplate.html
+*L
+1,9:50
+1#1,20:59
+9#0,2:78
+1#2,23:80
+10#0,19:102
+*E

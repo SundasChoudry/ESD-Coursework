@@ -9,12 +9,14 @@ Database UserName = root Password = 12345
 Resources Folder (can hold images/data/class diagrams)
 ----------------
 XYZ_Assoc.sql - creates Database and tables
+
 Test Data.sql - makes a few more memebers,users,claims and payments
 
 -----
 TODO:
 -----
 -Google address validation service
+
 -Filtering (?)
 
 --------------------
