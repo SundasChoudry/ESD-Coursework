@@ -20,6 +20,14 @@
         <description>ServletContextListener</description>
         <listener-class>listeners.JDBCListener</listener-class>
     </listener>
+    <servlet>
+        <servlet-name>ListMembers</servlet-name>
+        <servlet-class>web.ListMembers</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListMembers</servlet-name>
+        <url-pattern>/ListMembers.do</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

@@ -154,14 +154,17 @@ public class JDBCBean implements Serializable {
     //Copy resultSet to an ArrayList
     public ArrayList resultsToArrayList() throws SQLException {
 
-        ArrayList results = new ArrayList();
+        ArrayList<ArrayList<Object>> rows = new ArrayList<ArrayList<Object>>();
+        ArrayList<Object> columns;
         int numOfColumns = resultSet.getMetaData().getColumnCount();
 
         while (resultSet.next()) {
+             columns = new ArrayList<Object>();
             for (int i = 1; i <= numOfColumns; i++) {
-                results.add(resultSet.getObject(i));
+                columns.add(resultSet.getObject(i));
             }
+            rows.add(columns);
         }
-        return results;
+        return rows;
     }
 }//End JDBCBean

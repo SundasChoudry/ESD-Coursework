@@ -4,7 +4,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.jsp.*;
 
-public final class JSPTemplate_jsp extends org.apache.jasper.runtime.HttpJspBase
+public final class AdminDashboardHome_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
 
   private static final JspFactory _jspxFactory = JspFactory.getDefaultFactory();
@@ -14,7 +14,7 @@ public final class JSPTemplate_jsp extends org.apache.jasper.runtime.HttpJspBase
   static {
     _jspx_dependants = new java.util.ArrayList<String>(2);
     _jspx_dependants.add("/resources/Header.html");
-    _jspx_dependants.add("/resources/NavBarTemplate.html");
+    _jspx_dependants.add("/resources/AdminDashboardNavBar.html");
   }
 
   private org.glassfish.jsp.api.ResourceInjector _jspx_resourceInjector;
@@ -50,11 +50,11 @@ public final class JSPTemplate_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("<!DOCTYPE html>\n");
       out.write("<html>\n");
       out.write("    <head>\n");
-      out.write("        <title>JSP Template</title>\n");
       out.write("        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n");
-      out.write("        <link type=\"text/css\" rel=\"stylesheet\" href=\"css/main.css\">\n");
+      out.write("        <link type=\"text/css\" rel=\"stylesheet\" href=\"css/main.css\">    \n");
+      out.write("        <title>Admin Dashboard</title>\n");
       out.write("    </head>\n");
-      out.write("    <body>\n");
+      out.write("    <body>     \n");
       out.write("        ");
       out.write("<div class=\"header\">\n");
       out.write("    <div class=\"header-logo\">\n");
@@ -66,19 +66,18 @@ public final class JSPTemplate_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        ");
       out.write("<div class=\"navBar\">\n");
       out.write("    <ul class=\"menu\">\n");
-      out.write("        <li><a href=\"/html/default.asp\">Place holder</a></li>\n");
-      out.write("        <li><a href=\"/css/default.asp\">Place holder</a></li>\n");
-      out.write("        <li><a href=\"/html/default.asp\">Place holder</a></li>\n");
-      out.write("        <li><a href=\"/html/default.asp\">Place holder</a></li>\n");
-      out.write("        <li><a href=\"/html/default.asp\">HTML</a></li>\n");
+      out.write("        <li><a href=\"ListMembers.do\">Members</a></li>\n");
+      out.write("        <li><a href=\"/css/default.asp\">Balances</a></li>\n");
+      out.write("        <li><a href=\"/html/default.asp\">Claims</a></li>\n");
+      out.write("        <li><a href=\"/html/default.asp\">Applications</a></li>\n");
+      out.write("        <li><a href=\"/html/default.asp\">Turnover</a></li>\n");
       out.write("    </ul>\n");
       out.write("</div>\n");
       out.write("\n");
       out.write("\n");
-      out.write("\n");
       out.write("        <!-- Example Content -->\n");
       out.write("        <div class=\"content\">\n");
-      out.write("            <h1>CONTENT!</h1>\n");
+      out.write("            <h1>ADMIN DASHBOARD!</h1>\n");
       out.write("            <div style=\"height:600px;\">\n");
       out.write("                <a href=\"http://imgur.com/k9hz3\">\n");
       out.write("                    <img src=\"http://i.imgur.com/k9hz3.jpg\" title=\"Hosted by imgur.com\" alt=\"\" />\n");
@@ -90,7 +89,7 @@ public final class JSPTemplate_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                </a>\n");
       out.write("            </div>\n");
       out.write("        </div>\n");
-      out.write("\n");
+      out.write("        \n");
       out.write("    </body>\n");
       out.write("</html>\n");
     } catch (Throwable t) {
