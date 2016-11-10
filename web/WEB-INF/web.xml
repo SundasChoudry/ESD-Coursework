@@ -22,7 +22,7 @@
     </listener>
     <servlet>
         <servlet-name>ListMembers</servlet-name>
-        <servlet-class>web.ListMembers</servlet-class>
+        <servlet-class>controller.ListMembers</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ListMembers</servlet-name>

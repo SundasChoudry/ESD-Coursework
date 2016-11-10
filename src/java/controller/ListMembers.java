@@ -1,14 +1,13 @@
-package web;
+package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.GetMembersList;
 import model.JDBCBean;
 
 //@author Nate
@@ -27,11 +26,20 @@ public class ListMembers extends HttpServlet {
             throws ServletException, IOException {
 
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
-        GetMembersList getMembers = new GetMembersList(bean);
-        
-        ArrayList membersList = getMembers.getMembers();
-             
-        request.setAttribute("membersList", membersList);
+        String sqlStatement = "SELECT * FROM members";
+
+        //Execute sql statement
+        bean.executeSQLQuery(sqlStatement);
+
+        ArrayList retreivedMembers = new ArrayList();
+        try {
+            retreivedMembers = bean.resultsToArrayList();
+
+        } catch (SQLException e) {
+            System.out.println("SQL Statement Not Executed...\n" + e.toString() + "\n");
+        }
+
+        request.setAttribute("membersList", retreivedMembers);
         RequestDispatcher view = request.getRequestDispatcher("MembersList.jsp");
         view.forward(request, response);
 
