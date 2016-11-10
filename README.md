@@ -15,9 +15,13 @@ Test Data.sql - makes a few more memebers,users,claims and payments
 -----
 TODO:
 -----
--Google address validation service
+- Google address validation service
 
--Filtering (?)
+- Filtering (?)
+
+- Add taglibs
+
+- Member,user,claim and payment datastructures/classes?
 
 --------------------
 QUESTIONS FOR TUTORS

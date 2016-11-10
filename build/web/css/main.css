@@ -1,6 +1,40 @@
+@import url(navBar.css);
+@import url(header.css);
+
 /*Main content*/
 .content {
-    margin: 100px auto;
+    margin: 50px;
     padding: 30px;
 }
 
+.content h1 {
+    font-family: Georgia, serif;
+    color: #1f191a;
+    text-align: center;
+
+}
+
+.content table {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 10px;
+}
+
+.content th {
+    background-color: #eeeeee;
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 10px;
+}
+
+.content td {
+    text-align: center;
+    border: 1px solid black;
+    border-collapse: collapse;
+    border-spacing: 10px;
+}
