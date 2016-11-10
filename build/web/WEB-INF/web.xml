@@ -20,6 +20,20 @@
         <description>ServletContextListener</description>
         <listener-class>listeners.JDBCListener</listener-class>
     </listener>
+    
+    <servlet>
+        <servlet-name>Controller</servlet-name>
+        <servlet-class>controller.Controller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/Controller</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Controller</servlet-name>
+        <url-pattern>/docs/*</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>ListMembers</servlet-name>
         <servlet-class>controller.ListMembers</servlet-class>
@@ -28,6 +42,7 @@
         <servlet-name>ListMembers</servlet-name>
         <url-pattern>/ListMembers.do</url-pattern>
     </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30

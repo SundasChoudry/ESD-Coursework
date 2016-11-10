@@ -3,15 +3,16 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.JDBCBean;
 
 //@author Nate
-public class ListMembers extends HttpServlet {
+@WebServlet(name = "Controller", urlPatterns = {"/Controller", "/docs/*"})
+public class Controller extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -24,25 +25,55 @@ public class ListMembers extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        //Get JDBCBean from context
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
-        String sqlStatement = "SELECT * FROM members";
+        //Always Forward to main.jsp
+        String mainPage = "/WEB-INF/docs/main.jsp";
 
-        //Execute sql statement
-        bean.executeSQLQuery(sqlStatement);
+        //Find requested resource
+        String requestPath = request.getRequestURI().substring(request.getContextPath().length());
 
-        ArrayList retreivedMembers = new ArrayList();
-        try {
-            retreivedMembers = bean.resultsToArrayList();
+        getServletContext().log("Controller received a request for " + requestPath);
 
-        } catch (SQLException e) {
-            System.out.println("SQL Statement Not Executed...\n" + e.toString() + "\n");
+        //Resource to include
+        String include;
+        switch (requestPath) {
+            
+            case "/Controller":
+                include = "mainStart.jsp";
+                break;
+                
+            //Admin
+            case "/docs/AdminDashboard":
+                include = "AdminDashboard.jsp";
+                break;
+
+            case "/docs/MembersList":
+                //Execute sql statement
+                bean.executeSQLQuery("SELECT * FROM members");
+
+                ArrayList retreivedMembers = new ArrayList();
+                try {
+                    retreivedMembers = bean.resultsToArrayList();
+                } catch (SQLException e) {
+                    System.out.println("SQL Statement Not Executed...\n" + e.toString() + "\n");
+                }
+
+                request.setAttribute("membersList", retreivedMembers);
+                include = "MembersList.jsp";
+                break;
+                
+            //Users
+            case "/docs/UserDashboard":
+                include = "UserDashboard.jsp";
+                break;
+                
+            default:
+                include = "/docs/error404.jsp";
         }
+        request.setAttribute("included", include);
 
-        request.setAttribute("membersList", retreivedMembers);
-        RequestDispatcher view = request.getRequestDispatcher("/docs/MembersList.jsp");
-        view.forward(request, response);
-
+        request.getRequestDispatcher(mainPage).forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
