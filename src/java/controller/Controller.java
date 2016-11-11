@@ -38,11 +38,11 @@ public class Controller extends HttpServlet {
         //Resource to include
         String include;
         switch (requestPath) {
-            
+
             case "/Controller":
                 include = "mainStart.jsp";
                 break;
-                
+
             //Admin
             case "/docs/AdminDashboard":
                 include = "AdminDashboard.jsp";
@@ -62,12 +62,17 @@ public class Controller extends HttpServlet {
                 request.setAttribute("membersList", retreivedMembers);
                 include = "MembersList.jsp";
                 break;
-                
+
             //Users
             case "/docs/UserDashboard":
                 include = "UserDashboard.jsp";
                 break;
-                
+
+            //UserLogin
+            case "/docs/UserLogin":
+                include = "UserLogin.jsp";
+                break;
+
             default:
                 include = "/docs/error404.jsp";
         }
