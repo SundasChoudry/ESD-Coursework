@@ -8,17 +8,20 @@ package controller;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import model.JDBCBean;
+import model.LoginBean;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.JDBCBean;
-import model.LoginBean;
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author susan
+ * @author Susan Rai
+ * @author Sundas Choudry
  */
 public class Login extends HttpServlet {
 
@@ -60,14 +63,23 @@ public class Login extends HttpServlet {
             }
 
             if (loginValidation) {
-               if (statusQuery.equals("ADMIN")) {
+                if (statusQuery.equals("ADMIN")) {
                     request.setAttribute("ID", id);
                     RequestDispatcher view = request.getRequestDispatcher("/docs/AdminDashboard");
                     view.forward(request, response);
                 } else {
+                    /* Code to do it without session
                     request.setAttribute("ID", id);
                     RequestDispatcher view = request.getRequestDispatcher("/docs/UserDashboard");
-                    view.forward(request, response);
+                    view.forward(request, response);*/
+                    HttpSession session = request.getSession();
+                    session.setAttribute("ID", id);
+                    //Session will expiry in 20 mins
+                    session.setMaxInactiveInterval(20 * 60);
+                    Cookie userID = new Cookie("ID", id);
+                    response.addCookie(userID);
+                    String encodedURL = response.encodeRedirectURL("secure/user/UserDashboard.jsp");
+                    response.sendRedirect(encodedURL);
                 }
             } else {
                 request.setAttribute("ErrorMessage", "Invalid Login");
