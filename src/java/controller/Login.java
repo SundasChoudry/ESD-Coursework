@@ -40,16 +40,18 @@ public class Login extends HttpServlet {
         LoginBean loginBean = new LoginBean();
         String idQuery = "";
         String passwordQuery = "";
+        String statusQuery = "";
         boolean loginValidation = false;
 
         loginBean.setID(id);
         loginBean.setPassword(password);
         try {
-            resultSet = bean.executeSQLQuery("SELECT id,password FROM users");
+            resultSet = bean.executeSQLQuery("SELECT id,password,status FROM users");
 
             while (resultSet.next()) {
                 idQuery = resultSet.getString("id");
                 passwordQuery = resultSet.getString("password");
+                statusQuery = resultSet.getString("status");
 
                 if (loginBean.getID().equals(idQuery) && loginBean.getPassword().equals(passwordQuery)) {
                     loginValidation = true;
@@ -58,13 +60,18 @@ public class Login extends HttpServlet {
             }
 
             if (loginValidation) {
-                request.setAttribute("ID", id);
-                RequestDispatcher view = request.getRequestDispatcher("/docs/UserDashboard");
-                view.forward(request, response);
-
+               if (statusQuery.equals("ADMIN")) {
+                    request.setAttribute("ID", id);
+                    RequestDispatcher view = request.getRequestDispatcher("/docs/AdminDashboard");
+                    view.forward(request, response);
+                } else {
+                    request.setAttribute("ID", id);
+                    RequestDispatcher view = request.getRequestDispatcher("/docs/UserDashboard");
+                    view.forward(request, response);
+                }
             } else {
                 request.setAttribute("ErrorMessage", "Invalid Login");
-                RequestDispatcher view = request.getRequestDispatcher("/docs/UserLogin");
+                RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
                 view.forward(request, response);
             }
 
