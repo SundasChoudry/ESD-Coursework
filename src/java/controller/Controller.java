@@ -68,9 +68,9 @@ public class Controller extends HttpServlet {
                 include = "UserDashboard.jsp";
                 break;
 
-            //UserLogin
-            case "/docs/UserLogin":
-                include = "UserLogin.jsp";
+            //Login
+            case "/docs/Login":
+                include = "Login.jsp";
                 break;
 
             default:

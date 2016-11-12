@@ -5,6 +5,7 @@
 --%>
 <div class="navBar">
     <ul class="menu">
+        <li><a href="${pageContext.request.contextPath}/docs/AdminDashboard">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/docs/MembersList">Members</a></li>
         <li><a href="/css/default.asp">Balances</a></li>
         <li><a href="/html/default.asp">Claims</a></li>
