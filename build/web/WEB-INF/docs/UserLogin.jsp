@@ -18,18 +18,14 @@
                 <div class="title">
                     <h1>User Login</h1>
                 </div>
-
-                <div class="login-form">
-                    <div class="control-group">
-                        <input type="text" name="username" class="login-field" value="" placeholder="username">
-                    </div>
-
-                    <div class="control-group">
-                        <input type="password" name="password" class="login-field" value="" placeholder="password">
-                    </div>
-
-                    <a class="btn" href="#">login</a>
-                </div>
+                <form class="login-form" name="login" action="${pageContext.request.contextPath}/Login" method="post">
+                    <input class="control-group" type="text" name="ID" class="login-field" value="" placeholder="User ID">
+                    <input class="control-group" type="password" name="password" class="login-field" value="" placeholder="Password">
+                    <input class="btn" type="submit" value="Login">
+                    
+                    <td><%=(request.getAttribute("ErrorMessage") == null) ? "" : request.getAttribute("ErrorMessage")%></td>
+                </form>
+                
             </div>
         </div>
     </body>
