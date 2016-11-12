@@ -24,6 +24,8 @@ INSERT INTO `users` (`id`, `password`, `status`) VALUES
 INSERT INTO `users` (`id`, `password`, `status`) VALUES
 ('an-curtain', 'zxc', 'ACCEPTED');
 
+INSERT INTO `users` (`id`, `password`, `status`) VALUES
+('admin', 'admin', 'ADMIN');
 
 INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
 ('na-duran', '2016-11-03', 'Because Reasons', 'ACCEPTED', '100.50');
