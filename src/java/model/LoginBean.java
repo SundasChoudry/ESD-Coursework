@@ -7,7 +7,7 @@ package model;
 
 /**
  *
- * @author susan
+ * @author Susan Rai
  */
 public class LoginBean {
 

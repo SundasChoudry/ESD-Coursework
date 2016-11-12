@@ -1,7 +1,7 @@
 <%-- 
     Document   : UserLogin
     Created on : 11-Nov-2016, 15:56:25
-    Author     : susan
+    Author     : Susan Rai
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

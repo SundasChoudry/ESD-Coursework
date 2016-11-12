@@ -32,7 +32,7 @@ public class Controller extends HttpServlet {
 
         //Find requested resource
         String requestPath = request.getRequestURI().substring(request.getContextPath().length());
-
+        
         getServletContext().log("Controller received a request for " + requestPath);
 
         //Resource to include
@@ -64,9 +64,9 @@ public class Controller extends HttpServlet {
                 break;
 
             //Users
-            case "/docs/UserDashboard":
-                include = "UserDashboard.jsp";
-                break;
+//            case "/docs/UserDashboard":
+//                include = "UserDashboard.jsp";
+//                break;
 
             //Login
             case "/docs/Login":
