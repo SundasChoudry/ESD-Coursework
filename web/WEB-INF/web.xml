@@ -28,6 +28,10 @@
         <servlet-name>Login</servlet-name>
         <servlet-class>controller.Login</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>userDashboard</servlet-name>
+        <servlet-class>controller.UserDashboard</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
         <url-pattern>/Controller</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>userDashboard</servlet-name>
+        <url-pattern>/userDashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
