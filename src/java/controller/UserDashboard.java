@@ -17,7 +17,7 @@ import model.LoginBean;
 
 /**
  *
- * @author susan
+ * @author Susan Rai
  */
 @WebServlet(urlPatterns = {"/userDash"})
 public class UserDashboard extends HttpServlet {
