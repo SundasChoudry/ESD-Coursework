@@ -12,6 +12,7 @@ import model.JDBCBean;
 import model.LoginBean;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpSession;
  * @author Susan Rai
  * @author Sundas Choudry
  */
+@WebServlet(urlPatterns = { "/doLogin" })
 public class Login extends HttpServlet {
 
     /**
@@ -37,54 +39,71 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
-        String id = request.getParameter("ID");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
         ResultSet resultSet = null;
         LoginBean loginBean = new LoginBean();
         String idQuery = "";
         String passwordQuery = "";
         String statusQuery = "";
+        String errorMessage = "";
         boolean loginValidation = false;
 
-        loginBean.setID(id);
+        // Set username and password 
+        loginBean.setUsername(username);
         loginBean.setPassword(password);
         try {
             resultSet = bean.executeSQLQuery("SELECT id,password,status FROM users");
 
-            while (resultSet.next()) {
-                idQuery = resultSet.getString("id");
-                passwordQuery = resultSet.getString("password");
-                statusQuery = resultSet.getString("status");
+            // Checks if the getUsername or password is empty 
+            if (username == null || password == null || username.length() == 0 || password.length() == 0) {
+                loginValidation = true;
+                errorMessage = "Username and password is required";
+            } else {
+                // Iterate through Databases to check if ID and password provide by the user match
+                while (resultSet.next()) {
+                    idQuery = resultSet.getString("id");
+                    passwordQuery = resultSet.getString("password");
+                    statusQuery = resultSet.getString("status");
 
-                if (loginBean.getID().equals(idQuery) && loginBean.getPassword().equals(passwordQuery)) {
-                    loginValidation = true;
-                    break;
+                    if (loginBean.getUsername().equals(idQuery) && loginBean.getPassword().equals(passwordQuery)) {
+                        loginValidation = false;
+                        break;
+                    } else {
+                        loginValidation = true;
+                        errorMessage = "Invalid Login detail";
+                    }
                 }
             }
 
+            // If user provides incorrect information, load the login page again
             if (loginValidation) {
+                request.setAttribute("ErrorMessage", errorMessage);
+                RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
+                view.forward(request, response);
+            } else {
                 if (statusQuery.equals("ADMIN")) {
-                    request.setAttribute("ID", id);
+                    request.setAttribute("username", username);
                     RequestDispatcher view = request.getRequestDispatcher("/docs/AdminDashboard");
                     view.forward(request, response);
                 } else {
-                    /* Code to do it without session
-                    request.setAttribute("ID", id);
-                    RequestDispatcher view = request.getRequestDispatcher("/docs/UserDashboard");
-                    view.forward(request, response);*/
                     HttpSession session = request.getSession();
-                    session.setAttribute("ID", id);
+                    //Making it thread safe
+                    synchronized (session) {
+                        // Store user info in Session
+                        session.setAttribute("username", username);
+                    }
                     //Session will expiry in 20 mins
                     session.setMaxInactiveInterval(20 * 60);
-                    Cookie userID = new Cookie("ID", id);
+                    Cookie userID = new Cookie("username", username);
+                    //Store user info in Cookie
                     response.addCookie(userID);
-                    String encodedURL = response.encodeRedirectURL("secure/user/UserDashboard.jsp");
-                    response.sendRedirect(encodedURL);
+                    // If the user cokkie is disabled
+                    //String encodedURL = response.encodeRedirectURL("/userDash");
+                    /* If a POST is been successful, you normally want to redirect the request, so that the request 
+                    won't be resubmitted when the user refreshes the request (e.g. pressing F5 or navigating back in history). */
+                    response.sendRedirect(request.getContextPath() + "/userDash");
                 }
-            } else {
-                request.setAttribute("ErrorMessage", "Invalid Login");
-                RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
-                view.forward(request, response);
             }
 
             resultSet.close();
