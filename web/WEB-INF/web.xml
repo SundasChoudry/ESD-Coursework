@@ -30,7 +30,11 @@
     </servlet>
     <servlet>
         <servlet-name>userDashboard</servlet-name>
-        <servlet-class>controller.UserDashboard</servlet-class>
+        <servlet-class>controller.user.UserDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminDashboard</servlet-name>
+        <servlet-class>controller.AdminDashboard</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>userDashboard</servlet-name>
         <url-pattern>/userDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminDashboard</servlet-name>
+        <url-pattern>/AdminDashboard</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

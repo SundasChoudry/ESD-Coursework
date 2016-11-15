@@ -48,6 +48,7 @@ public class Login extends HttpServlet {
         String statusQuery = "";
         String errorMessage = "";
         boolean loginValidation = false;
+        HttpSession session = request.getSession();
 
         // Set username and password 
         loginBean.setUsername(username);
@@ -81,30 +82,35 @@ public class Login extends HttpServlet {
                 request.setAttribute("ErrorMessage", errorMessage);
                 RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
                 view.forward(request, response);
-            } else {
+            } else{
                 if (statusQuery.equals("ADMIN")) {
-                    request.setAttribute("username", username);
-                    RequestDispatcher view = request.getRequestDispatcher("/docs/AdminDashboard");
-                    view.forward(request, response);
-                } else {
-                    HttpSession session = request.getSession();
-                    //Making it thread safe
-                    synchronized (session) {
-                        // Store user info in Session
-                        session.setAttribute("username", username);
-                    }
-                    //Session will expiry in 20 mins
-                    session.setMaxInactiveInterval(20 * 60);
-                    Cookie userID = new Cookie("username", username);
-                    //Store user info in Cookie
-                    response.addCookie(userID);
-                    // If the user cokkie is disabled
-                    //String encodedURL = response.encodeRedirectURL("/userDash");
-                    /* If a POST is been successful, you normally want to redirect the request, so that the request 
-                    won't be resubmitted when the user refreshes the request (e.g. pressing F5 or navigating back in history). */
-                    response.sendRedirect(request.getContextPath() + "/userDash");
+                //Making it thread safe
+                synchronized (session) {
+                    // Store user info in Session
+                    session.setAttribute("adminUsername", username);
                 }
+                Cookie userID = new Cookie("username", username);
+                //Store user info in Cookie
+                response.addCookie(userID);
+                response.sendRedirect(request.getContextPath() + "/adminDash");
+            } else {
+                //Making it thread safe
+                synchronized (session) {
+                    // Store user info in Session
+                    session.setAttribute("username", username);
+                }
+                //Session will expiry in 20 mins
+                session.setMaxInactiveInterval(20 * 60);
+                Cookie userID = new Cookie("username", username);
+                //Store user info in Cookie
+                response.addCookie(userID);
+                // If the user cokkie is disabled
+                //String encodedURL = response.encodeRedirectURL("/userDash");
+                /* If a POST is been successful, you normally want to redirect the request, so that the request 
+                    won't be resubmitted when the user refreshes the request (e.g. pressing F5 or navigating back in history). */
+                response.sendRedirect(request.getContextPath() + "/userDash");
             }
+        }
 
             resultSet.close();
         } catch (SQLException ex) {
