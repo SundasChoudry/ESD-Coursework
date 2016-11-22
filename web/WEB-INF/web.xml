@@ -14,7 +14,7 @@
     </context-param>
     <context-param>
         <param-name>JDBC-Password</param-name>
-        <param-value/>
+        <param-value>12345</param-value>
     </context-param>
     <listener>
         <description>ServletContextListener</description>
@@ -29,12 +29,12 @@
         <servlet-class>controller.Login</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>userDashboard</servlet-name>
-        <servlet-class>controller.user.UserDashboard</servlet-class>
+        <servlet-name>AdminController</servlet-name>
+        <servlet-class>controller.AdminController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>AdminDashboard</servlet-name>
-        <servlet-class>controller.AdminDashboard</servlet-class>
+        <servlet-name>UserController</servlet-name>
+        <servlet-class>controller.UserController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
@@ -44,25 +44,17 @@
         <servlet-name>Controller</servlet-name>
         <url-pattern>/docs/*</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>ListMembers</servlet-name>
-        <servlet-class>controller.ListMembers</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ListMembers</servlet-name>
-        <url-pattern>/ListMembers.do</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>userDashboard</servlet-name>
-        <url-pattern>/userDashboard</url-pattern>
+        <servlet-name>AdminController</servlet-name>
+        <url-pattern>/AdminController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>AdminDashboard</servlet-name>
-        <url-pattern>/AdminDashboard</url-pattern>
+        <servlet-name>UserController</servlet-name>
+        <url-pattern>/UserController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

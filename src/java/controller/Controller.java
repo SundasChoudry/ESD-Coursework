@@ -3,11 +3,13 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.JDBCBean;
 
 //@author Nate
@@ -25,8 +27,9 @@ public class Controller extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Get JDBCBean from context
-        JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
+        //Get session attribute
+        HttpSession session = request.getSession();
+
         //Always Forward to main.jsp
         String mainPage = "/WEB-INF/docs/main.jsp";
 
@@ -43,39 +46,37 @@ public class Controller extends HttpServlet {
                 include = "mainStart.jsp";
                 break;
 
-            //Admin
-            case "/docs/AdminDashboard":
-                include = "AdminDashboard.jsp";
-                break;
-
-            case "/docs/MembersList":
-                //Execute sql statement
-                bean.executeSQLQuery("SELECT * FROM members");
-
-                ArrayList retreivedMembers = new ArrayList();
-                try {
-                    retreivedMembers = bean.resultsToArrayList();
-                } catch (SQLException e) {
-                    System.out.println("SQL Statement Not Executed...\n" + e.toString() + "\n");
-                }
-
-                request.setAttribute("membersList", retreivedMembers);
-                include = "MembersList.jsp";
-                break;
-
-            //Users
-            case "/docs/UserDashboard":
-                include = "UserDashboard.jsp";
-                break;
-
             //Login
             case "/docs/Login":
                 include = "Login.jsp";
                 break;
 
-            //Login
+            //Registration
             case "/docs/Registration":
                 include = "Registration.jsp";
+                break;
+
+            //Admin
+            case "/docs/AdminDashboard":
+                // Check if session is still valid
+                if (session.getAttribute("adminUsername") == null) {
+                    include = "Login.jsp";
+                } else {
+                    include = "AdminDashboard.jsp";
+                }
+                break;
+
+            case "/docs/MembersList":
+                include = "MembersList.jsp";
+                break;
+
+            case "/docs/BalanceList":
+                include = "BalanceList.jsp";
+                break;
+
+            //Users
+            case "/docs/UserDashboard":
+                include = "UserDashboard.jsp";
                 break;
 
             default:

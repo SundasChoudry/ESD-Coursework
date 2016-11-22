@@ -15,7 +15,7 @@
             <input class="btn" type="reset" value="Reset">
 
             <!--Dispaly the error message-->
-            <td><%=(request.getAttribute("ErrorMessage") == null) ? "" : request.getAttribute("ErrorMessage")%></td>
+            <td><%=(request.getAttribute("ErrorMessage") == null) ? "" : request.getAttribute("ErrorMessage")%>
         </form>
     </div>
 </div>

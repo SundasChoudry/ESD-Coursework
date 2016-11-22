@@ -20,6 +20,10 @@ body {
 
 }
 
+.content div {
+        
+}
+
 .content table {
     width: 80%;
     margin-left: auto;
@@ -94,6 +98,10 @@ input:focus {
     box-shadow: none;
 }
 
+.radio {
+    width: 10px;
+}
+
 .btn {
     border: 2px solid transparent;
     background: #3498DB;
@@ -109,7 +117,7 @@ input:focus {
     transition: 0.25s;
     display: block;
     width: 250px;
-    margin: 5px 0 0 0;
+    margin: 5px auto;
 }
 
 .btn:hover {

@@ -7,9 +7,9 @@
     <ul class="menu">
         <li><a href="${pageContext.request.contextPath}/docs/AdminDashboard">Home</a></li>
         <li><a href="${pageContext.request.contextPath}/docs/MembersList">Members</a></li>
-        <li><a href="/css/default.asp">Balances</a></li>
-        <li><a href="/html/default.asp">Claims</a></li>
-        <li><a href="/html/default.asp">Applications</a></li>
-        <li><a href="/html/default.asp">Turnover</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/BalanceList">Balances</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/ClaimsList">Claims</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/ApplicationsList">Applications</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/Turnover">Turnover</a></li>
     </ul>
 </div>
