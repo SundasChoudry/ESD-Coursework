@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import java.io.IOException;
@@ -24,7 +19,7 @@ import javax.servlet.http.HttpSession;
  * @author Susan Rai
  * @author Sundas Choudry
  */
-@WebServlet(urlPatterns = { "/doLogin" })
+
 public class Login extends HttpServlet {
 
     /**
@@ -42,7 +37,7 @@ public class Login extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         ResultSet resultSet = null;
-        LoginBean loginBean = new LoginBean();
+//        LoginBean loginBean = new LoginBean();
         String idQuery = "";
         String passwordQuery = "";
         String statusQuery = "";
@@ -51,8 +46,8 @@ public class Login extends HttpServlet {
         HttpSession session = request.getSession();
 
         // Set username and password 
-        loginBean.setUsername(username);
-        loginBean.setPassword(password);
+//        loginBean.setUsername(username);
+//        loginBean.setPassword(password);
         try {
             resultSet = bean.executeSQLQuery("SELECT id,password,status FROM users");
 
@@ -67,12 +62,12 @@ public class Login extends HttpServlet {
                     passwordQuery = resultSet.getString("password");
                     statusQuery = resultSet.getString("status");
 
-                    if (loginBean.getUsername().equals(idQuery) && loginBean.getPassword().equals(passwordQuery)) {
+                    if (username.equals(idQuery) && password.equals(passwordQuery)) {
                         loginValidation = false;
                         break;
                     } else {
                         loginValidation = true;
-                        errorMessage = "Invalid Login detail";
+                        errorMessage = "Invalid Login details";
                     }
                 }
             }
@@ -92,19 +87,20 @@ public class Login extends HttpServlet {
                 Cookie userID = new Cookie("username", username);
                 //Store user info in Cookie
                 response.addCookie(userID);
-                response.sendRedirect(request.getContextPath() + "/adminDash");
+
+                response.sendRedirect(request.getContextPath() + "/docs/AdminDashboard");
             } else {
                 //Making it thread safe
                 synchronized (session) {
                     // Store user info in Session
                     session.setAttribute("username", username);
                 }
-                //Session will expiry in 20 mins
+                //Session will expire in 20 mins
                 session.setMaxInactiveInterval(20 * 60);
                 Cookie userID = new Cookie("username", username);
                 //Store user info in Cookie
                 response.addCookie(userID);
-                // If the user cokkie is disabled
+                // If the user cookie is disabled
                 //String encodedURL = response.encodeRedirectURL("/userDash");
                 /* If a POST is been successful, you normally want to redirect the request, so that the request 
                     won't be resubmitted when the user refreshes the request (e.g. pressing F5 or navigating back in history). */
