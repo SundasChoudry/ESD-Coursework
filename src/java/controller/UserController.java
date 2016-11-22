@@ -20,7 +20,7 @@ import model.LoginBean;
  * @author Susan Rai
  */
 @WebServlet(urlPatterns = {"/userDash"})
-public class UserDashboard extends HttpServlet {
+public class UserController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
