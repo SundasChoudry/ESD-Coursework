@@ -9,7 +9,7 @@ body {
 }
 
 .content {
-    margin: 50px;
+    margin: 30px;
     padding: 30px;
 }
 
@@ -17,38 +17,41 @@ body {
     font-family: Arial;
     color: #1f191a;
     text-align: center;
-
 }
 
-.content div {
-        
+.content h2 {
+    font-family: Arial;
+    color: #1f191a;
+    text-align: center;
 }
 
 .content table {
-    width: 80%;
+    width: auto;
     margin-left: auto;
     margin-right: auto;
-    padding: 5px;
     border: 1px solid black;
-    border-collapse: collapse;
-    border-spacing: 10px;
+    border-collapse: separate;
+    border-radius: 3px;
+}
+
+.content td, th {
+    text-align: center;
+    padding: 5px;
+    border-left:solid black 1px;
+    border-top:solid black 1px;
 }
 
 .content th {
     background-color: #eeeeee;
-    text-align: center;
-    border: 1px solid black;
-    border-collapse: collapse;
-    border-spacing: 10px;
+    border-top: none;
 }
 
-.content td {
-    text-align: center;
-    border: 1px solid black;
-    border-collapse: collapse;
-    border-spacing: 10px;
+td:first-child {
+    border-left: none;
 }
-
+th:first-child {
+    border-left: none;
+}
 /*Copyright (c) 2016 by Tushar Sonawane (http://codepen.io/Tushkiz/pen/xqfsy)*/
 
 * {

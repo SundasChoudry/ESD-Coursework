@@ -1,34 +1,34 @@
 <%-- 
-    Document   : BalanceList
-    Created on : 21-Nov-2016, 22:17:36
+    Document   : ClaimsLIst
+    Created on : 22-Nov-2016, 19:50:33
     Author     : Nate
 --%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
-
+${JDBCBean.executeSQLQuery("SELECT * FROM Claims WHERE status='PENDING'")}
 <div class="content">
-    <h1>Outstanding Balances</h1>
+    <h1>Claims</h1>
     <form action="${pageContext.request.contextPath}/AdminController" method="post">
         <table>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Address</th>
-                <th>DOB</th>
-                <th>DOR</th>
-                <th>Membership</th>
-                <th>Balance</th>
-                <!--<th>Select</th> -->
+                <th>Member ID</th>
+                <th>Date</th>
+                <th>Rationale</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Select</th> 
             </tr>
-            <c:forEach items="${JDBCBean.sqlQueryToArrayList('SELECT * FROM members GROUP BY ID HAVING SUM(balance)>0.0')}" var="row" varStatus="rowStatus">
+            <c:forEach items="${JDBCBean.resultsToArrayList()}" var="row" varStatus="rowStatus">
                 <tr>
                     <c:forEach items="${row}" var="column" varStatus="columnStatus">
                         <c:choose>
                             <c:when test="${columnStatus.last}">
                                 <td>£${column}</td>
-                                <!-- <td><input class="radio" type="radio" name="rowSelection" value="${row[0]}"/></td> -->
-                            </c:when>
-                            <c:otherwise>
+                                <td><input class="radio" type="radio" name="tableSelection" value="${row[0]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
+                                </c:when>
+                                <c:otherwise>
                                 <td>${column}</td>
                             </c:otherwise>
                         </c:choose>

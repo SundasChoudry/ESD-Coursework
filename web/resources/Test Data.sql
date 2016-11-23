@@ -28,19 +28,6 @@ INSERT INTO `users` (`id`, `password`, `status`) VALUES
 ('admin', 'admin', 'ADMIN');
 
 
-INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
-('na-duran', '2016-4-05', 'Because Reasons', 'ACCEPTED', '105');
-
-INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
-('an-curtain', '2016-2-03', 'Because Reasons', 'PENDING', '80');
-
-INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
-('me-aydin', '2016-5-02', 'Because Reasons', 'ACCEPTED', '120');
-
-INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
-('me-aydin', '2016-11-03', 'Because Reasons', 'ACCEPTED', '90');
-
-
 INSERT INTO `payments` (`mem_id`, `type_of_payment`, `amount`, `date`) VALUES
 ('na-duran', 'CARD', '10', '2016-01-04');
 

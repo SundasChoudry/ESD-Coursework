@@ -1,16 +1,12 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.JDBCBean;
 
 //@author Nate
 @WebServlet(name = "Controller", urlPatterns = {"/Controller", "/docs/*"})
@@ -45,7 +41,7 @@ public class Controller extends HttpServlet {
             case "/Controller":
                 include = "mainStart.jsp";
                 break;
-
+                
             //Login
             case "/docs/Login":
                 include = "Login.jsp";
@@ -66,14 +62,28 @@ public class Controller extends HttpServlet {
                 }
                 break;
 
-            case "/docs/MembersList":
-                include = "MembersList.jsp";
+            case "/docs/ListMembers":
+                include = "ListMembers.jsp";
                 break;
-
-            case "/docs/BalanceList":
-                include = "BalanceList.jsp";
+            case "/docs/ListBalance":
+                include = "ListBalance.jsp";
                 break;
-
+            case "/docs/ManageMember":              
+                include = "ManageMember.jsp";
+                break;
+            case "/docs/ListClaims":
+                include = "ListClaims.jsp";
+                break;
+            case "/docs/ManageClaim":
+                include = "ManageClaim.jsp";
+                break;
+            case "/docs/ListApplications":              
+                include = "ListApplications.jsp";
+                break;
+            case "/docs/ManageApplication":
+                include = "ManageApplication.jsp";
+                break;
+                
             //Users
             case "/docs/UserDashboard":
                 include = "UserDashboard.jsp";
