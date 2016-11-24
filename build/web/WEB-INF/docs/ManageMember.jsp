@@ -7,8 +7,7 @@
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
 
 <div class="content">
-    <h1>Manage Member ${requestedMember[1]}</h1>
-    TODO: add member details  hide suspend/resume? or prevent from doing incorrect behaviour
+    <h1>Manage Member ${requestedMember[1]}</h1> 
    
     <table>
         <tr>

@@ -26,7 +26,7 @@ ${JDBCBean.executeSQLQuery("SELECT * FROM Claims WHERE status='SUBMITTED'")}
                         <c:choose>
                             <c:when test="${columnStatus.last}">
                                 <td>£${column}</td>
-                                <td><input class="radio" type="radio" name="tableSelection" value="${row[0]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
+                                <td><input class="radio" type="radio" name="selectedClaim" value="${row[1]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
                                 </c:when>
                                 <c:otherwise>
                                 <td>${column}</td>

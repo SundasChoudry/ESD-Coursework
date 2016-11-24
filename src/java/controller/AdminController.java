@@ -38,9 +38,13 @@ public class AdminController extends HttpServlet {
                 break;
                 
                 case "/ListClaims":
-//                suspendOrResumeMember(bean, request);
+                getMember(bean, request, request.getParameter("selectedClaim"));
                 include = "/docs/ManageClaim";
                 break;
+//                case "/ManageClaim":
+////                suspendOrResumeMember(bean, request);
+//                include = "/docs/ManageClaim";
+//                break;
             default:
                 include = "/docs/error404.jsp";
         }
