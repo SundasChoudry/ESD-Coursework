@@ -19,15 +19,10 @@ TODO:
 
 - Filtering (?)
 
-- Add taglibs
+- Add taglibs (?)
 
-- Member,user,claim and payment datastructures/classes?
+- Shorten Controller switch, replace with lookup
 
 --------------------
 QUESTIONS FOR TUTORS
 --------------------
-1. Can we just have one admin account already set up via app context params
-
-2. Automatically reject claim if >2 or admin must reject?
-
-3. Clarification on claims/subsidy and payments beacuse I have no idea what the f he is talking about

@@ -38,6 +38,6 @@ public class JDBCListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent sce) {
 
         //Stop JDBC connection
-        bean.stopJDBC();
+//        bean.stopJDBC();
     }
 }

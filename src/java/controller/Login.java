@@ -111,7 +111,7 @@ public class Login extends HttpServlet {
             resultSet.close();
         } catch (SQLException ex) {
 
-            System.out.println("SQL statement failed executed!");
+            System.out.println("SQL Login statement failed to execute!");
             ex.printStackTrace();
         }
     }

@@ -80,7 +80,7 @@ TRUNCATE TABLE `Members`;
 --
 
 INSERT INTO `Members` (`id`, `name`, `address`, `dob`, `dor`, `status`, `balance`) VALUES
-('me-aydin', 'Mehmet Aydin', '148 Station Rd, London, N3 2SG', '1968-10-20', '2015-01-26', 'APPLIED', 0);
+('me-aydin', 'Mehmet Aydin', '148 Station Rd, London, N3 2SG', '1968-10-20', '2015-01-26', 'APPROVED', 0);
 
 -- --------------------------------------------------------
 
@@ -109,6 +109,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
 --
 
 TRUNCATE TABLE `payments`;
+
 -- --------------------------------------------------------
 
 --
@@ -139,7 +140,7 @@ TRUNCATE TABLE `users`;
 --
 
 INSERT INTO `users` (`id`, `password`, `status`) VALUES
-('me-aydin', '201068', 'APPLIED');
+('me-aydin', '201068', 'APPROVED');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
