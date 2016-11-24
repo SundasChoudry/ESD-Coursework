@@ -18,7 +18,7 @@
                 <th>DOR</th>
                 <th>Membership</th>
                 <th>Balance</th>
-                <!--<th>Select</th> -->
+                <th>Select</th>
             </tr>
             <c:forEach items="${JDBCBean.sqlQueryToArrayList('SELECT * FROM members GROUP BY ID HAVING SUM(balance)>0.0')}" var="row" varStatus="rowStatus">
                 <tr>
@@ -26,9 +26,9 @@
                         <c:choose>
                             <c:when test="${columnStatus.last}">
                                 <td>£${column}</td>
-                                <!-- <td><input class="radio" type="radio" name="rowSelection" value="${row[0]}"/></td> -->
-                            </c:when>
-                            <c:otherwise>
+                                <td><input class="radio" type="radio" name="selectedMember" value="${row[0]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
+                                </c:when>
+                                <c:otherwise>
                                 <td>${column}</td>
                             </c:otherwise>
                         </c:choose>
@@ -37,6 +37,7 @@
             </c:forEach>
         </table>
         <br><br>
+        <input type="hidden" name="viewId" value="/ListBalance">
         <input class="btn" type="submit" value="View Selected"/>
     </form>
 </div>

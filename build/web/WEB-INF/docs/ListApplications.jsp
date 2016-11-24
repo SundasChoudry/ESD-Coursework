@@ -1,13 +1,14 @@
 <%-- 
-    Document   : main
-    Created on : 10-Nov-2016, 13:16:36
+    Document   : ClaimsLIst
+    Created on : 22-Nov-2016, 19:50:33
     Author     : Nate
 --%>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
-${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR status='SUSPENDED'")}
+${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPLIED'")}
 <div class="content">
-    <h1>XYZ Members</h1>
+    <h1>Applications</h1>
     <form action="${pageContext.request.contextPath}/AdminController" method="post">
         <table>
             <tr>
@@ -26,7 +27,7 @@ ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR sta
                         <c:choose>
                             <c:when test="${columnStatus.last}">
                                 <td>£${column}</td>
-                                <td><input class="radio" type="radio" name="selectedMember" value="${row[0]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
+                                <td><input class="radio" type="radio" name="tableSelection" value="${row[0]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
                                 </c:when>
                                 <c:otherwise>
                                 <td>${column}</td>
@@ -37,7 +38,6 @@ ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR sta
             </c:forEach>
         </table>
         <br><br>
-        <input type="hidden" name="viewId" value="/ListMembers">
         <input class="btn" type="submit" value="View Selected"/>
     </form>
 </div>

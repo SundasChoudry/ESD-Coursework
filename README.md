@@ -26,6 +26,3 @@ TODO:
 --------------------
 QUESTIONS FOR TUTORS
 --------------------
-1. Insert request param into EL function call?
-
-2. Escape "'s in EL function call?
