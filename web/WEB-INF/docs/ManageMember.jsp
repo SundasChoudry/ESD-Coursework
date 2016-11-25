@@ -8,32 +8,32 @@
 
 <div class="content">
     <h1>Manage Member ${requestedMember[1]}</h1> 
-   
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>DOB</th>
-            <th>DOR</th>
-            <th>Membership</th>
-            <th>Balance</th>
-        </tr>
-        <tr>
-            <c:forEach items="${requestedMember}" var="column" varStatus="columnStatus">
-                <c:choose>
-                    <c:when test="${columnStatus.last}">
-                        <td>£${column}</td>
-                    </c:when>
-                    <c:otherwise>
-                        <td>${column}</td>
-                    </c:otherwise>
-                </c:choose>
-            </c:forEach>
-        </tr>
-    </table>
 
-    <form action="${pageContext.request.contextPath}/AdminController" method="post">    
+    <form action="${pageContext.request.contextPath}/AdminController" method="post">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>DOB</th>
+                <th>DOR</th>
+                <th>Membership</th>
+                <th>Balance</th>
+            </tr>
+            <tr>
+                <c:forEach items="${requestedMember}" var="column" varStatus="columnStatus">
+                    <c:choose>
+                        <c:when test="${columnStatus.last}">
+                            <td>£${column}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td>${column}</td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </tr>
+        </table>
+
         <h2>Claims</h2>
         <br>
         <table>
@@ -60,6 +60,7 @@
                 </tr>
             </c:forEach>
         </table>
+        
         <br><br>
         <h2>Payments</h2>
         <table>

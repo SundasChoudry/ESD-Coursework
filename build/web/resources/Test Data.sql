@@ -35,6 +35,9 @@ INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
 ('a-curtain', '2016-2-03', 'Because Reasons', 'SUBMITTED', 80);
 
 INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
+('a-curtain', '2016-2-03', 'Because Reasons', 'SUBMITTED', 50);
+
+INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
 ('me-aydin', '2016-5-02', 'Because Reasons', 'APPROVED', 120);
 
 INSERT INTO `Claims` (`mem_id`, `date`, `rationale`, `status`, `amount`) VALUES
@@ -46,3 +49,6 @@ INSERT INTO `payments` (`mem_id`, `type_of_payment`, `amount`, `date`) VALUES
 
 INSERT INTO `payments` (`mem_id`, `type_of_payment`, `amount`, `date`) VALUES
 ('a-curtain', 'CARD', 10, '2016-10-01');
+
+INSERT INTO `payments` (`mem_id`, `type_of_payment`, `amount`, `date`) VALUES
+('m-mouse', 'CARD', 10, '2016-9-01');

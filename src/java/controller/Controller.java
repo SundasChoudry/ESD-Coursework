@@ -83,7 +83,10 @@ public class Controller extends HttpServlet {
             case "/docs/ManageApplication":
                 include = "ManageApplication.jsp";
                 break;
-
+            case "/docs/ManageTurnover":
+                include = "ManageTurnover.jsp";
+                break;
+                
             //Users
             case "/docs/UserDashboard":
                 include = "UserDashboard.jsp";
@@ -113,7 +116,7 @@ public class Controller extends HttpServlet {
                 include = "UserPaymentConfirm.jsp";
                 break;
             default:
-                include = "/docs/error404.jsp";
+                include = "/docs/Error404.jsp";
         }
         request.setAttribute("included", include);
 
