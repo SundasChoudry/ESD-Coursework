@@ -78,6 +78,7 @@
     <table>
         <tr>
             <th>ID</th>
+            <th>Member ID</th>
             <th>Type</th>
             <th>Amount</th>
             <th>Date</th>
