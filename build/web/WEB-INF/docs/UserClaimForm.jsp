@@ -7,6 +7,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/UserDashboardNavBar.jsp" %>
 <div class="content">
+    <h1>Make Claim</h1>
     <form class="content-screen" action="${pageContext.request.contextPath}/UserController" method="post" style="text-align: center;">
         Claim Amount:<br>
         <input type="text" name="amount">

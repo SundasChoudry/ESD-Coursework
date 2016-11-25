@@ -60,6 +60,10 @@ public class UserController extends HttpServlet {
                 makeClaim(bean, request);
                 include = "/docs/UserClaimConfirm";
                 break;
+            case "/UserMakePayment":
+                makePayment(bean, request);
+                include = "/docs/UserPaymentConfirm";
+                break;
             default:
                 include = "/docs/error404.jsp";
         }
@@ -133,16 +137,32 @@ public class UserController extends HttpServlet {
         try {
             temp = getRowNum(bean, "id", "Claims");
             bean.executeSQLUpdate("INSERT INTO `Claims`(`id`, `mem_id`, `date`, `rationale`, `status`, `amount`) "
-                    + "VALUES (" + ((long)temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
+                    + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
             request.setAttribute("confirm", "succeeded");
         } catch (SQLException ex) {
             request.setAttribute("confirm", "failed");
-            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("SQL failed to execute in UserController, makeClaim! " + ex);
         }
     }
 
     public ArrayList getRowNum(JDBCBean bean, String column, String table) throws SQLException {
         return (ArrayList) bean.sqlQueryToArrayList("SELECT COUNT(" + column + ") FROM " + table).get(0);
+    }
+
+    public void makePayment(JDBCBean bean, HttpServletRequest request) {
+        ArrayList temp;
+        String user = request.getParameter("username");
+        String paymentType = request.getParameter("paymentType");
+        double amount = Double.parseDouble(request.getParameter("amount"));
+        try {
+            temp = getRowNum(bean, "id", "payments");
+            bean.executeSQLUpdate("INSERT INTO `payments`(`id`, `mem_id`, `type_of_payment`, `amount`, `date`) "
+                    + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + paymentType + "'," + amount + ",'" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "')");
+            request.setAttribute("confirm", "succeeded");
+        } catch (SQLException ex) {
+            request.setAttribute("confirm", "failed");
+            System.out.println("SQL failed to execute in UserController, makePayment! " + ex);
+        }
     }
 
 }
