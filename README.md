@@ -21,7 +21,7 @@ TODO:
 
 - Add taglibs (?)
 
-- Shorten Controller switch, replace with lookup
+- Shorten ControllerAdmin/User switch, replace with lookup
 
 --------------------
 QUESTIONS FOR TUTORS

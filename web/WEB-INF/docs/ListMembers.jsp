@@ -5,9 +5,14 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
-${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR status='SUSPENDED'")}
+
+<div style="display: none;">
+    ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR status='SUSPENDED'")}
+</div>
+
 <div class="content">
     <h1>XYZ Members</h1>
+    
     <form action="${pageContext.request.contextPath}/AdminController" method="post">
         <table>
             <tr>
@@ -39,5 +44,5 @@ ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR sta
         <br><br>
         <input type="hidden" name="viewId" value="/ListMembers">
         <input class="btn" type="submit" value="View Selected"/>
-    </form>
+    </form>       
 </div>

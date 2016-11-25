@@ -10,6 +10,6 @@
         <li><a href="${pageContext.request.contextPath}/docs/ListBalance">Balances</a></li>
         <li><a href="${pageContext.request.contextPath}/docs/ListClaims">Claims</a></li>
         <li><a href="${pageContext.request.contextPath}/docs/ListApplications">Applications</a></li>
-        <li><a href="${pageContext.request.contextPath}/docs/Turnover">Turnover</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/ManageTurnover">Turnover</a></li>
     </ul>
 </div>

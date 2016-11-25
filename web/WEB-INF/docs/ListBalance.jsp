@@ -6,8 +6,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
 
+<div style="display: none;">
+    ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' AND balance>'0.0'")}
+</div>
+
 <div class="content">
     <h1>Outstanding Balances</h1>
+    
     <form action="${pageContext.request.contextPath}/AdminController" method="post">
         <table>
             <tr>
@@ -20,7 +25,7 @@
                 <th>Balance</th>
                 <th>Select</th>
             </tr>
-            <c:forEach items="${JDBCBean.sqlQueryToArrayList('SELECT * FROM members GROUP BY ID HAVING SUM(balance)>0.0')}" var="row" varStatus="rowStatus">
+            <c:forEach items="${JDBCBean.resultsToArrayList()}" var="row" varStatus="rowStatus">
                 <tr>
                     <c:forEach items="${row}" var="column" varStatus="columnStatus">
                         <c:choose>
@@ -39,5 +44,5 @@
         <br><br>
         <input type="hidden" name="viewId" value="/ListBalance">
         <input class="btn" type="submit" value="View Selected"/>
-    </form>
+    </form>       
 </div>

@@ -27,7 +27,7 @@ ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPLIED'")}
                         <c:choose>
                             <c:when test="${columnStatus.last}">
                                 <td>£${column}</td>
-                                <td><input class="radio" type="radio" name="tableSelection" value="${row[0]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
+                                <td><input class="radio" type="radio" name="selectedMember" value="${row[0]}" ${rowStatus.first ? 'checked="checked"' : ''}/></td>
                                 </c:when>
                                 <c:otherwise>
                                 <td>${column}</td>
@@ -38,6 +38,7 @@ ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPLIED'")}
             </c:forEach>
         </table>
         <br><br>
+        <input type="hidden" name="viewId" value="/ListApplications">
         <input class="btn" type="submit" value="View Selected"/>
     </form>
 </div>

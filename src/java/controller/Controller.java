@@ -83,6 +83,9 @@ public class Controller extends HttpServlet {
             case "/docs/ManageApplication":
                 include = "ManageApplication.jsp";
                 break;
+            case "/docs/ManageTurnover":
+                include = "ManageTurnover.jsp";
+                break;
                 
             //Users
             case "/docs/UserDashboard":
