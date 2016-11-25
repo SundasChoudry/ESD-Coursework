@@ -104,7 +104,7 @@ public class Login extends HttpServlet {
                 //String encodedURL = response.encodeRedirectURL("/userDash");
                 /* If a POST is been successful, you normally want to redirect the request, so that the request 
                     won't be resubmitted when the user refreshes the request (e.g. pressing F5 or navigating back in history). */
-                response.sendRedirect(request.getContextPath() + "/userDash");
+                response.sendRedirect(request.getContextPath() + "/docs/UserDashboard");
             }
         }
 

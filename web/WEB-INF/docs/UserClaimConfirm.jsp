@@ -1,7 +1,7 @@
 <%-- 
-    Document   : UserDashBoard
-    Created on : 11-Nov-2016, 21:08:48
-    Author     : Susan Rai
+    Document   : UserClaimForm
+    Created on : 25-Nov-2016, 06:10:55
+    Author     : tomfisher
 --%>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -10,8 +10,7 @@
 <div class="main">
     <div class="content-screen">
         <div class="title">
-            <h1>Welcome <br><%=request.getSession().getAttribute("username")%></h1>
+            <h1>Your claim submission has ${confirm}</h1>
         </div>              
     </div>
 </div>
-
