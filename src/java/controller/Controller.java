@@ -41,7 +41,7 @@ public class Controller extends HttpServlet {
             case "/Controller":
                 include = "mainStart.jsp";
                 break;
-                
+
             //Login
             case "/docs/Login":
                 include = "Login.jsp";
@@ -68,7 +68,7 @@ public class Controller extends HttpServlet {
             case "/docs/ListBalance":
                 include = "ListBalance.jsp";
                 break;
-            case "/docs/ManageMember":              
+            case "/docs/ManageMember":
                 include = "ManageMember.jsp";
                 break;
             case "/docs/ListClaims":
@@ -77,18 +77,41 @@ public class Controller extends HttpServlet {
             case "/docs/ManageClaim":
                 include = "ManageClaim.jsp";
                 break;
-            case "/docs/ListApplications":              
+            case "/docs/ListApplications":
                 include = "ListApplications.jsp";
                 break;
             case "/docs/ManageApplication":
                 include = "ManageApplication.jsp";
                 break;
-                
+
             //Users
             case "/docs/UserDashboard":
                 include = "UserDashboard.jsp";
                 break;
 
+            case "/docs/ManageUserBalance":
+                include = "ManageUserBalance.jsp";
+                break;
+
+            case "/docs/UserBalance":
+                include = "UserBalance.jsp";
+                break;
+
+            case "/docs/UserMakeClaim":
+                include = "UserClaimForm.jsp";
+                break;
+
+            case "/docs/UserClaimConfirm":
+                include = "UserClaimConfirm.jsp";
+                break;
+
+            case "/docs/UserMakePayment":
+                include = "UserPaymentForm.jsp";
+                break;
+
+            case "/docs/UserPaymentConfirm":
+                include = "UserPaymentConfirm.jsp";
+                break;
             default:
                 include = "/docs/error404.jsp";
         }

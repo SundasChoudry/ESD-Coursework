@@ -6,20 +6,23 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.LoginBean;
+import model.JDBCBean;
 
 /**
  *
- * @author Susan Rai
+ * @author Tom Fisher
  */
-@WebServlet(urlPatterns = {"/userDash"})
 public class UserController extends HttpServlet {
 
     /**
@@ -41,13 +44,38 @@ public class UserController extends HttpServlet {
             view.forward(request, response);
         }
 
+        JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
+
+        //Find JSP that refered resource
+        String requestingView = request.getParameter("viewId");
+        getServletContext().log("User Controller received a request from " + requestingView);
+
+        String include;
+        switch (requestingView) {
+            case "/UserBalance":
+                getBalance(bean, request);
+                include = "/docs/UserBalance";
+                break;
+            case "/UserMakeClaim":
+                makeClaim(bean, request);
+                include = "/docs/UserClaimConfirm";
+                break;
+            case "/UserMakePayment":
+                makePayment(bean, request);
+                include = "/docs/UserPaymentConfirm";
+                break;
+            default:
+                include = "/docs/error404.jsp";
+        }
+
+        request.getRequestDispatcher(include).forward(request, response);
+
         // Store info in request attribute
         // request.setAttribute("user", username);
         // Logined, forward to /WEB-INF/views/userInfoView.jsp
         //RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/docs/UserDashboard");
-        RequestDispatcher view = request.getRequestDispatcher("/docs/UserDashboard");
-        view.forward(request, response);
-
+        //RequestDispatcher view = request.getRequestDispatcher("/docs/UserDashboard");
+        //view.forward(request, response);
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,5 +116,53 @@ public class UserController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void getBalance(JDBCBean bean, HttpServletRequest request) {
+        String username = request.getParameter("username");
+        ArrayList balance = new ArrayList();
+        try {
+            balance = bean.sqlQueryToArrayList("SELECT balance FROM `Members` WHERE id='" + username + "'");
+            request.setAttribute("balance", balance);
+        } catch (SQLException ex) {
+            System.out.println("SQL failed to execute in UserController, getBalance! " + ex);
+        }
+
+    }
+
+    private void makeClaim(JDBCBean bean, HttpServletRequest request) {
+        ArrayList temp;
+        String user = request.getParameter("username");
+        String rationale = request.getParameter("rationale");
+        double amount = Double.parseDouble(request.getParameter("amount"));
+        try {
+            temp = getRowNum(bean, "id", "Claims");
+            bean.executeSQLUpdate("INSERT INTO `Claims`(`id`, `mem_id`, `date`, `rationale`, `status`, `amount`) "
+                    + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
+            request.setAttribute("confirm", "succeeded");
+        } catch (SQLException ex) {
+            request.setAttribute("confirm", "failed");
+            System.out.println("SQL failed to execute in UserController, makeClaim! " + ex);
+        }
+    }
+
+    public ArrayList getRowNum(JDBCBean bean, String column, String table) throws SQLException {
+        return (ArrayList) bean.sqlQueryToArrayList("SELECT COUNT(" + column + ") FROM " + table).get(0);
+    }
+
+    public void makePayment(JDBCBean bean, HttpServletRequest request) {
+        ArrayList temp;
+        String user = request.getParameter("username");
+        String paymentType = request.getParameter("paymentType");
+        double amount = Double.parseDouble(request.getParameter("amount"));
+        try {
+            temp = getRowNum(bean, "id", "payments");
+            bean.executeSQLUpdate("INSERT INTO `payments`(`id`, `mem_id`, `type_of_payment`, `amount`, `date`) "
+                    + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + paymentType + "'," + amount + ",'" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "')");
+            request.setAttribute("confirm", "succeeded");
+        } catch (SQLException ex) {
+            request.setAttribute("confirm", "failed");
+            System.out.println("SQL failed to execute in UserController, makePayment! " + ex);
+        }
+    }
 
 }
