@@ -60,6 +60,7 @@
                 </tr>
             </c:forEach>
         </table>
+        
         <br><br>
         <h2>Payments</h2>
         <table>

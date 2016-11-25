@@ -24,6 +24,8 @@ public class AdminController extends HttpServlet {
 
         String include;
         switch (requestingView) {
+
+            //Manage Members
             case "/ListMembers":
                 getMemberById(bean, request, request.getParameter("selectedMember"));
                 include = "/docs/ManageMember";
@@ -37,6 +39,7 @@ public class AdminController extends HttpServlet {
                 include = "/docs/ManageMember";
                 break;
 
+            //Manage Claims
             case "/ListClaims":
                 getClaim(bean, request, request.getParameter("selectedClaim"));
                 getMemberByClaimId(bean, request, request.getParameter("selectedClaim"));
@@ -47,6 +50,7 @@ public class AdminController extends HttpServlet {
                 include = "/docs/ManageClaim";
                 break;
 
+            //Manage Applications
             case "/ListApplications":
                 getMemberById(bean, request, request.getParameter("selectedMember"));
                 include = "/docs/ManageApplication";
@@ -56,13 +60,14 @@ public class AdminController extends HttpServlet {
                 include = "/docs/ManageApplication";
                 break;
 
+            //Manage Turnover
             case "/ManageTurnover":
-                getApprovedClaims(bean, request);
-                include = "/docs/ManageApplication";
+                chargeMembers(bean, request);
+                include = "/docs/ManageTurnover";
                 break;
-                
+
             default:
-                include = "/docs/error404.jsp";
+                include = "/docs/Error404.jsp";
         }
 
         request.getRequestDispatcher(include).forward(request, response);
@@ -121,7 +126,7 @@ public class AdminController extends HttpServlet {
             requestedClaims = bean.sqlQueryToArrayList("SELECT * FROM claims WHERE mem_id='" + memberID + "'");
             requestedPayments = bean.sqlQueryToArrayList("SELECT * FROM payments WHERE mem_id='" + memberID + "'");
         } catch (SQLException ex) {
-            System.out.println("SQL failed to execute in AdminController! " + ex);
+            System.out.println("SQL failed to execute in AdminController, getMember. " + ex);
         }
 
         request.setAttribute("requestedMember", requestedMember.get(0));
@@ -135,22 +140,9 @@ public class AdminController extends HttpServlet {
         //Get member ID
         String memberID = (String) getClaim(bean, request, claimID).get(1);
 
-        //Generate lists for required tables
-        ArrayList requestedMember = new ArrayList();
-        ArrayList requestedClaims = new ArrayList();
-        ArrayList requestedPayments = new ArrayList();
+        //Get member bu ID
+        getMemberById(bean, request, memberID);
 
-        try {
-            requestedMember = (ArrayList) bean.sqlQueryToArrayList("SELECT * FROM members WHERE id='" + memberID + "'").get(0);
-            requestedClaims = bean.sqlQueryToArrayList("SELECT * FROM claims WHERE mem_id='" + memberID + "'");
-            requestedPayments = bean.sqlQueryToArrayList("SELECT * FROM payments WHERE mem_id='" + memberID + "'");
-        } catch (SQLException ex) {
-            System.out.println("SQL failed to execute in AdminController! " + ex);
-        }
-
-        request.setAttribute("requestedMember", requestedMember);
-        request.setAttribute("requestedClaims", requestedClaims);
-        request.setAttribute("requestedPayments", requestedPayments);
     }
 
     //Gets selected claim by ID
@@ -162,7 +154,7 @@ public class AdminController extends HttpServlet {
         try {
             claim = (ArrayList) bean.sqlQueryToArrayList("SELECT * FROM claims WHERE id='" + claimID + "'").get(0);
         } catch (SQLException ex) {
-            System.out.println("SQL failed to execute in AdminController! " + ex);
+            System.out.println("SQL failed to execute in AdminController, getClaim. " + ex);
         }
 
         request.setAttribute("requestedClaim", claim);
@@ -170,24 +162,9 @@ public class AdminController extends HttpServlet {
         return claim;
     }
 
-    //Get all approved claims
-    protected void getApprovedClaims(JDBCBean bean, HttpServletRequest request) {
-        
-        //Get all approved  claims
-        ArrayList approvedClaims = new ArrayList();
-
-        try {
-            approvedClaims = (ArrayList) bean.sqlQueryToArrayList("SELECT * FROM claims WHERE status='APPROVED'");
-        } catch (SQLException ex) {
-            System.out.println("SQL failed to execute in AdminController! " + ex);
-        }
-
-        request.setAttribute("approvedClaims", approvedClaims);
-    }
-
     //Sets status of members account
     protected void suspendOrResumeMember(JDBCBean bean, HttpServletRequest request) {
-        
+
         //Split into action and member ID
         String action = request.getParameter("manageMemberAction").split("_")[0];
         String memberID = request.getParameter("manageMemberAction").split("_")[1];
@@ -204,7 +181,7 @@ public class AdminController extends HttpServlet {
 
     //Upgrades provisional memeber to full member or rejects application
     protected void approveOrRejectApplication(JDBCBean bean, HttpServletRequest request) {
-        
+
         //Split into action and member ID
         String action = request.getParameter("manageMemberAction").split("_")[0];
         String memberID = request.getParameter("manageMemberAction").split("_")[1];
@@ -223,7 +200,7 @@ public class AdminController extends HttpServlet {
 
     //Sets status of selected claim
     protected void acceptOrRejectClaim(JDBCBean bean, HttpServletRequest request) {
-        
+
         //Split into action and claim ID
         String action = request.getParameter("manageClaimAction").split("_")[0];
         String claimID = request.getParameter("manageClaimAction").split("_")[1];
@@ -236,7 +213,28 @@ public class AdminController extends HttpServlet {
         getMemberByClaimId(bean, request, claimID);
     }
 
-    //Calculate sum of claims approved
-    
     //Charge members yearly fee
+    protected void chargeMembers(JDBCBean bean, HttpServletRequest request) {
+
+        //Get sum of all approved claims and number of active members
+        ArrayList approvedClaims = new ArrayList();
+        ArrayList activeMembers = new ArrayList();
+
+        try {
+            approvedClaims = (ArrayList) bean.sqlQueryToArrayList("SELECT SUM(amount) FROM claims WHERE status='APPROVED' AND date >= DATE_SUB(NOW(),INTERVAL 1 YEAR)").get(0);
+            activeMembers = (ArrayList) bean.sqlQueryToArrayList("SELECT COUNT(*) FROM members WHERE status='APPROVED'").get(0);
+        } catch (SQLException ex) {
+            System.out.println("SQL failed to execute in AdminController, chargeMembers. " + ex);
+        }
+
+        //Calculate charge for each member
+        Double sumOfClaims = (Double) approvedClaims.get(0);
+        Long sumOfActiveMembers = (Long) activeMembers.get(0);
+        String membersCharge = Double.toString(sumOfClaims / sumOfActiveMembers);
+
+        //Add charge to active members balance
+        bean.executeSQLUpdate("UPDATE members SET balance=balance + " + membersCharge + " WHERE status='APPROVED'");
+
+        request.setAttribute("membersCharge", membersCharge);
+    }
 }

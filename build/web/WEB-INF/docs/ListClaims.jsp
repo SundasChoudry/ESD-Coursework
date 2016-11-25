@@ -5,12 +5,15 @@
 --%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
-<div style="display: none;">
-    ${JDBCBean.executeSQLQuery("SELECT * FROM Claims WHERE status='APPROVED'")}
-</div>
-<div class="content">
 
-    <h1>Approved Claims</h1>
+<div class="content">
+    <h1>Claims</h1>
+
+    <div style="display: none;">
+        ${JDBCBean.executeSQLQuery("SELECT * FROM Claims WHERE status='APPROVED'")}
+    </div>
+
+    <h2>Approved Claims</h2>
     <table>
         <tr>
             <th>ID</th>
@@ -26,8 +29,8 @@
                     <c:choose>
                         <c:when test="${columnStatus.last}">
                             <td>£${column}</td>                           
-                            </c:when>
-                            <c:otherwise>
+                        </c:when>
+                        <c:otherwise>
                             <td>${column}</td>
                         </c:otherwise>
                     </c:choose>
@@ -41,7 +44,7 @@
         ${JDBCBean.executeSQLQuery("SELECT * FROM Claims WHERE status='SUBMITTED'")}
     </div>
 
-    <h1>Submitted Claims</h1>
+    <h2>Submitted Claims</h2>
     <form action="${pageContext.request.contextPath}/AdminController" method="post">
         <table>
             <tr>

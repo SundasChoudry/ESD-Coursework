@@ -3,12 +3,16 @@
     Created on : 22-Nov-2016, 19:50:33
     Author     : Nate
 --%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
-${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPLIED'")}
+
 <div class="content">
     <h1>Applications</h1>
+
+    <div style="display: none;">
+        ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPLIED'")}
+    </div>
+
     <form action="${pageContext.request.contextPath}/AdminController" method="post">
         <table>
             <tr>

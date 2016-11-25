@@ -93,7 +93,7 @@ public class Controller extends HttpServlet {
                 break;
 
             default:
-                include = "/docs/error404.jsp";
+                include = "/docs/Error404.jsp";
         }
         request.setAttribute("included", include);
 

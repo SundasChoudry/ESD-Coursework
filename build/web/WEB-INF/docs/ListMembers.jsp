@@ -6,13 +6,13 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
 
-<div style="display: none;">
-    ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR status='SUSPENDED'")}
-</div>
-
 <div class="content">
     <h1>XYZ Members</h1>
-    
+
+    <div style="display: none;">
+        ${JDBCBean.executeSQLQuery("SELECT * FROM members WHERE status='APPROVED' OR status='SUSPENDED'")}
+    </div>
+
     <form action="${pageContext.request.contextPath}/AdminController" method="post">
         <table>
             <tr>

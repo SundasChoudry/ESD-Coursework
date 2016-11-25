@@ -6,12 +6,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ include file="/resources/AdminDashboardNavBar.jsp" %>
 
-<div style="display: none;">
-    ${JDBCBean.executeSQLQuery("SELECT * FROM claims WHERE status='APPROVED' AND date >= DATE_SUB(NOW(),INTERVAL 1 YEAR)")}
-</div>
-
 <div class="content">
-    <h1>Manage XYZ Finances</h1> 
+    <h1>Manage XYZ Finances</h1>
+
+    <div style="display: none;">
+        ${JDBCBean.executeSQLQuery("SELECT * FROM claims WHERE status='APPROVED' AND date >= DATE_SUB(NOW(),INTERVAL 1 YEAR)")}
+    </div>
 
     <h2>Years Claims</h2>
     <br>
@@ -40,6 +40,14 @@
         </c:forEach>
     </table>
     <br><br>
-
-
+    <h2>Total Claims: £${JDBCBean.sqlQueryToArrayList("SELECT SUM(amount) FROM claims WHERE status='APPROVED' AND date >= DATE_SUB(NOW(),INTERVAL 1 YEAR)")[0][0]}</h2>
+    <h2>Number of active members: ${JDBCBean.sqlQueryToArrayList("SELECT COUNT(*) FROM members WHERE status='APPROVED'")[0][0]}</h2>
+    
+    <c:if test="${membersCharge ne null}">
+        <h2>Members charged: £${membersCharge}</h2>      
+    </c:if>
+    <form action="${pageContext.request.contextPath}/AdminController" method="post">   
+        <input type="hidden" name="viewId" value="/ManageTurnover">
+        <button class="btn" type="submit" name="manageTurnoverAction" value="chargeMembers">Calculate Charges</button>
+    </form>  
 </div>
