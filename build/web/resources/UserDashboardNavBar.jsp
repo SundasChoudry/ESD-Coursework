@@ -12,3 +12,8 @@
         <li><a href="${pageContext.request.contextPath}/docs/UserGetClaim">Claims</a></li>
     </ul>
 </div>
+<div class="logout">
+    <form class="form" action="${pageContext.request.contextPath}/Logout" method="post">
+        <input class="logoutBtn" type="submit" value="Logout" >
+    </form>
+</div>
