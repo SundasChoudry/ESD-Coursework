@@ -5,11 +5,11 @@
 --%>
 <div class="navBar">
     <ul class="menu">
-        <li><a href="${pageContext.request.contextPath}/docs/UserDashboard">Home</a></li>
-        <li><a href="${pageContext.request.contextPath}/docs/ManageUserBalance">Balance</a></li>
-        <li><a href="${pageContext.request.contextPath}/docs/UserMakeClaim">Make claim</a></li>
-        <li><a href="${pageContext.request.contextPath}/docs/UserMakePayment">Make payment</a></li>
-        <li><a href="${pageContext.request.contextPath}/docs/UserGetClaim">Claims</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/user/UserDashboard">Home</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/user/ManageUserBalance">Balance</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/user/UserMakeClaim">Make claim</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/user/UserMakePayment">Make payment</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/user/UserGetClaim">Claims</a></li>
     </ul>
 </div>
 <div class="logout">

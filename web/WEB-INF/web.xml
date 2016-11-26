@@ -16,6 +16,14 @@
         <param-name>JDBC-Password</param-name>
         <param-value>12345</param-value>
     </context-param>
+    <filter>
+        <filter-name>UserFilter</filter-name>
+        <filter-class>controller.filter.UserFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>UserFilter</filter-name>
+        <url-pattern>/docs/user/*</url-pattern>
+    </filter-mapping>
     <listener>
         <description>ServletContextListener</description>
         <listener-class>listeners.JDBCListener</listener-class>
