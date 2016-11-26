@@ -39,10 +39,10 @@ public class UserController extends HttpServlet {
         HttpSession session = request.getSession();
 
         // Check if session is still valid
-        if (session.getAttribute("username") == null) {
-            RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
-            view.forward(request, response);
-        }
+//        if (session.getAttribute("username") == null) {
+//            RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
+//            view.forward(request, response);
+//        }
 
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
 

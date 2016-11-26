@@ -88,32 +88,37 @@ public class Controller extends HttpServlet {
                 break;
                 
             //Users
-            case "/docs/UserDashboard":
-                include = "UserDashboard.jsp";
+            case "/docs/user/UserDashboard":
+                // Check if session is still valid
+                if (session.getAttribute("username") == null) {
+                    include = "Login.jsp";
+                } else {
+                    include = "user/UserDashboard.jsp";
+                }
                 break;
 
-            case "/docs/ManageUserBalance":
-                include = "ManageUserBalance.jsp";
+            case "/docs/user/ManageUserBalance":
+                include = "user/ManageUserBalance.jsp";
                 break;
 
-            case "/docs/UserBalance":
-                include = "UserBalance.jsp";
+            case "/docs/user/UserBalance":
+                include = "user/UserBalance.jsp";
                 break;
 
-            case "/docs/UserMakeClaim":
-                include = "UserClaimForm.jsp";
+            case "/docs/user/UserMakeClaim":
+                include = "user/UserClaimForm.jsp";
                 break;
 
-            case "/docs/UserClaimConfirm":
-                include = "UserClaimConfirm.jsp";
+            case "/docs/user/UserClaimConfirm":
+                include = "user/UserClaimConfirm.jsp";
                 break;
 
-            case "/docs/UserMakePayment":
-                include = "UserPaymentForm.jsp";
+            case "/docs/user/UserMakePayment":
+                include = "user/UserPaymentForm.jsp";
                 break;
 
-            case "/docs/UserPaymentConfirm":
-                include = "UserPaymentConfirm.jsp";
+            case "/docs/user/UserPaymentConfirm":
+                include = "user/UserPaymentConfirm.jsp";
                 break;
             default:
                 include = "/docs/Error404.jsp";

@@ -35,6 +35,7 @@ public class Logout extends HttpServlet {
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
+                //expire the cookie
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
@@ -46,7 +47,6 @@ public class Logout extends HttpServlet {
         }
         RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
         view.forward(request, response);
-        //response.sendRedirect("login.html");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
