@@ -120,6 +120,10 @@ public class Controller extends HttpServlet {
             case "/docs/user/UserPaymentConfirm":
                 include = "user/UserPaymentConfirm.jsp";
                 break;
+                
+            case "/docs/RegistrationSuccessful":
+                include = "RegistrationSuccessful.jsp";
+                break;
             default:
                 include = "/docs/Error404.jsp";
         }
