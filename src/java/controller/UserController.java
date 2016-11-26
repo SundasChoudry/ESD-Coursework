@@ -54,18 +54,18 @@ public class UserController extends HttpServlet {
         switch (requestingView) {
             case "/UserBalance":
                 getBalance(bean, request);
-                include = "/docs/UserBalance";
+                include = "/docs/user/UserBalance";
                 break;
             case "/UserMakeClaim":
                 makeClaim(bean, request);
-                include = "/docs/UserClaimConfirm";
+                include = "/docs/user/UserClaimConfirm";
                 break;
             case "/UserMakePayment":
                 makePayment(bean, request);
-                include = "/docs/UserPaymentConfirm";
+                include = "/docs/user/UserPaymentConfirm";
                 break;
             default:
-                include = "/docs/error404.jsp";
+                include = "/docs/user/error404.jsp";
         }
 
         request.getRequestDispatcher(include).forward(request, response);

@@ -10,7 +10,7 @@
 <div class="main">
     <div class="content-screen">
         <div class="title">
-            <h1>Welcome <br><%=request.getSession().getAttribute("username")%></h1>
+            <h1>Welcome <br>${username}</h1>
         </div>              
     </div>
 </div>
