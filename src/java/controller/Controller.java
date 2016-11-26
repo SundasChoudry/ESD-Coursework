@@ -89,7 +89,12 @@ public class Controller extends HttpServlet {
                 
             //Users
             case "/docs/UserDashboard":
-                include = "UserDashboard.jsp";
+                // Check if session is still valid
+                if (session.getAttribute("username") == null) {
+                    include = "Login.jsp";
+                } else {
+                    include = "UserDashboard.jsp";
+                }
                 break;
 
             case "/docs/ManageUserBalance":
