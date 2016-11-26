@@ -28,42 +28,42 @@ public class AdminController extends HttpServlet {
             //Manage Members
             case "/ListMembers":
                 getMemberById(bean, request, request.getParameter("selectedMember"));
-                include = "/docs/ManageMember";
+                include = "/docs/admin/ManageMember";
                 break;
             case "/ListBalance":
                 getMemberById(bean, request, request.getParameter("selectedMember"));
-                include = "/docs/ManageMember";
+                include = "/docs/admin/ManageMember";
                 break;
             case "/ManageMember":
                 suspendOrResumeMember(bean, request);
-                include = "/docs/ManageMember";
+                include = "/docs/admin/ManageMember";
                 break;
 
             //Manage Claims
             case "/ListClaims":
                 getClaim(bean, request, request.getParameter("selectedClaim"));
                 getMemberByClaimId(bean, request, request.getParameter("selectedClaim"));
-                include = "/docs/ManageClaim";
+                include = "/docs/admin/ManageClaim";
                 break;
             case "/ManageClaim":
                 acceptOrRejectClaim(bean, request);
-                include = "/docs/ManageClaim";
+                include = "/docs/admin/ManageClaim";
                 break;
 
             //Manage Applications
             case "/ListApplications":
                 getMemberById(bean, request, request.getParameter("selectedMember"));
-                include = "/docs/ManageApplication";
+                include = "/docs/admin/ManageApplication";
                 break;
             case "/ManageApplication":
                 approveOrRejectApplication(bean, request);
-                include = "/docs/ManageApplication";
+                include = "/docs/admin/ManageApplication";
                 break;
 
             //Manage Turnover
             case "/ManageTurnover":
                 chargeMembers(bean, request);
-                include = "/docs/ManageTurnover";
+                include = "/docs/admin/ManageTurnover";
                 break;
 
             default:

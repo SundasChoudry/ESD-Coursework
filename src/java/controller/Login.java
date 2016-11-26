@@ -88,7 +88,7 @@ public class Login extends HttpServlet {
                 //Store user info in Cookie
                 response.addCookie(userID);
 
-                response.sendRedirect(request.getContextPath() + "/docs/AdminDashboard");
+                response.sendRedirect(request.getContextPath() + "/docs/admin/AdminDashboard");
             } else {
                 //Making it thread safe
                 synchronized (session) {

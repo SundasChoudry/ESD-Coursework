@@ -65,7 +65,7 @@ public class UserController extends HttpServlet {
                 include = "/docs/user/UserPaymentConfirm";
                 break;
             default:
-                include = "/docs/user/error404.jsp";
+                include = "/docs/Error404.jsp";
         }
 
         request.getRequestDispatcher(include).forward(request, response);

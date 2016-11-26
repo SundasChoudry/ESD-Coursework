@@ -53,38 +53,38 @@ public class Controller extends HttpServlet {
                 break;
 
             //Admin
-            case "/docs/AdminDashboard":
+            case "/docs/admin/AdminDashboard":
                 // Check if session is still valid
                 if (session.getAttribute("adminUsername") == null) {
                     include = "Login.jsp";
                 } else {
-                    include = "AdminDashboard.jsp";
+                    include = "admin/AdminDashboard.jsp";
                 }
                 break;
 
-            case "/docs/ListMembers":
-                include = "ListMembers.jsp";
+            case "/docs/admin/ListMembers":
+                include = "admin/ListMembers.jsp";
                 break;
-            case "/docs/ListBalance":
-                include = "ListBalance.jsp";
+            case "/docs/admin/ListBalance":
+                include = "admin/ListBalance.jsp";
                 break;
-            case "/docs/ManageMember":
-                include = "ManageMember.jsp";
+            case "/docs/admin/ManageMember":
+                include = "admin/ManageMember.jsp";
                 break;
-            case "/docs/ListClaims":
-                include = "ListClaims.jsp";
+            case "/docs/admin/ListClaims":
+                include = "admin/ListClaims.jsp";
                 break;
-            case "/docs/ManageClaim":
-                include = "ManageClaim.jsp";
+            case "/docs/admin/ManageClaim":
+                include = "admin/ManageClaim.jsp";
                 break;
-            case "/docs/ListApplications":
-                include = "ListApplications.jsp";
+            case "/docs/admin/ListApplications":
+                include = "admin/ListApplications.jsp";
                 break;
-            case "/docs/ManageApplication":
-                include = "ManageApplication.jsp";
+            case "/docs/admin/ManageApplication":
+                include = "admin/ManageApplication.jsp";
                 break;
-            case "/docs/ManageTurnover":
-                include = "ManageTurnover.jsp";
+            case "/docs/admin/ManageTurnover":
+                include = "admin/ManageTurnover.jsp";
                 break;
                 
             //Users
