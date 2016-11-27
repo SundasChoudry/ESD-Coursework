@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import model.JDBCBean;
-import model.LoginBean;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +35,6 @@ public class Login extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         ResultSet resultSet = null;
-//        LoginBean loginBean = new LoginBean();
         String idQuery = "";
         String passwordQuery = "";
         String statusQuery = "";
@@ -45,9 +42,6 @@ public class Login extends HttpServlet {
         boolean loginValidation = false;
         HttpSession session = request.getSession();
 
-        // Set username and password 
-//        loginBean.setUsername(username);
-//        loginBean.setPassword(password);
         try {
             resultSet = bean.executeSQLQuery("SELECT id,password,status FROM users");
 
