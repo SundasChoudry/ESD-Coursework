@@ -1,8 +1,8 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.JDBCBean;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
  * @author Susan Rai
  * @author Sundas Choudry
  */
-
 public class Login extends HttpServlet {
 
     /**
@@ -34,79 +33,61 @@ public class Login extends HttpServlet {
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        ResultSet resultSet = null;
-        String idQuery = "";
-        String passwordQuery = "";
-        String statusQuery = "";
         String errorMessage = "";
         boolean loginValidation = false;
         HttpSession session = request.getSession();
 
+        ArrayList<ArrayList<Object>> requestedUserDetail = new ArrayList<>();
+
         try {
-            resultSet = bean.executeSQLQuery("SELECT id,password,status FROM users");
-
-            // Checks if the getUsername or password is empty 
-            if (username == null || password == null || username.length() == 0 || password.length() == 0) {
-                loginValidation = true;
-                errorMessage = "Username and password is required";
-            } else {
-                // Iterate through Databases to check if ID and password provide by the user match
-                while (resultSet.next()) {
-                    idQuery = resultSet.getString("id");
-                    passwordQuery = resultSet.getString("password");
-                    statusQuery = resultSet.getString("status");
-
-                    if (username.equals(idQuery) && password.equals(passwordQuery)) {
-                        loginValidation = false;
-                        break;
-                    } else {
-                        loginValidation = true;
-                        errorMessage = "Invalid Login details";
-                    }
-                }
-            }
-
-            // If user provides incorrect information, load the login page again
-            if (loginValidation) {
-                request.setAttribute("ErrorMessage", errorMessage);
-                RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
-                view.forward(request, response);
-            } else{
-                if (statusQuery.equals("ADMIN")) {
-                //Making it thread safe
-                synchronized (session) {
-                    // Store user info in Session
-                    session.setAttribute("adminUsername", username);
-                }
-                Cookie userID = new Cookie("username", username);
-                //Store user info in Cookie
-                response.addCookie(userID);
-
-                response.sendRedirect(request.getContextPath() + "/docs/admin/AdminDashboard");
-            } else {
-                //Making it thread safe
-                synchronized (session) {
-                    // Store user info in Session
-                    session.setAttribute("username", username);
-                }
-                //Session will expire in 20 mins
-                session.setMaxInactiveInterval(20 * 60);
-                Cookie userID = new Cookie("username", username);
-                //Store user info in Cookie
-                response.addCookie(userID);
-                // If the user cookie is disabled
-                //String encodedURL = response.encodeRedirectURL("/userDash");
-                /* If a POST is been successful, you normally want to redirect the request, so that the request 
-                    won't be resubmitted when the user refreshes the request (e.g. pressing F5 or navigating back in history). */
-                response.sendRedirect(request.getContextPath() + "/docs/user/UserDashboard");
-            }
+            requestedUserDetail = bean.sqlQueryToArrayList("SELECT * FROM users WHERE id='" + username + "'");
+        } catch (SQLException ex) {
+            System.out.println("SQL Login statement failed to execute! ");
+            ex.printStackTrace();
         }
 
-            resultSet.close();
-        } catch (SQLException ex) {
+        // Checks if the getUsername or password is empty 
+        if (username == null || password == null || username.length() == 0 || password.length() == 0) {
+            loginValidation = true;
+            errorMessage = "Username and password is required";
+        } else if (requestedUserDetail.isEmpty() || !requestedUserDetail.get(0).get(1).equals(password)) {
+            loginValidation = true;
+            errorMessage = "Invalid Login details";
+        } else {
+            loginValidation = false;
+        }
 
-            System.out.println("SQL Login statement failed to execute!");
-            ex.printStackTrace();
+        // If user provides incorrect information, load the login page again
+        if (loginValidation) {
+            request.setAttribute("ErrorMessage", errorMessage);
+            RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
+            view.forward(request, response);
+        // If the user is admin redirect to admin page
+        } else if (requestedUserDetail.get(0).get(2).equals("ADMIN")) {
+            //Making it thread safe
+            synchronized (session) {
+                // Store user info in Session
+                session.setAttribute("adminUsername", username);
+            }
+            Cookie userID = new Cookie("username", username);
+            //Store user info in Cookie
+            response.addCookie(userID);
+
+            response.sendRedirect(request.getContextPath() + "/docs/admin/AdminDashboard");
+        } else {
+            //Making it thread safe
+            synchronized (session) {
+                // Store user info in Session
+                session.setAttribute("username", username);
+            }
+            //Session will expire in 20 mins
+            session.setMaxInactiveInterval(20 * 60);
+            Cookie userID = new Cookie("username", username);
+            //Store user info in Cookie
+            response.addCookie(userID);
+            /* If a POST is been successful, you would want to redirect the request, so that the request 
+                    won't be resubmitted when the user refreshes the request*/
+            response.sendRedirect(request.getContextPath() + "/docs/user/UserDashboard");
         }
     }
 
