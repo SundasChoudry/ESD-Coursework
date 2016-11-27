@@ -9,7 +9,9 @@
         <li><a href="${pageContext.request.contextPath}/docs/user/ManageUserBalance">Balance</a></li>
         <li><a href="${pageContext.request.contextPath}/docs/user/UserMakeClaim">Make claim</a></li>
         <li><a href="${pageContext.request.contextPath}/docs/user/UserMakePayment">Make payment</a></li>
-        <li><a href="${pageContext.request.contextPath}/docs/user/UserGetClaim">Claims</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/user/ManageUserClaims">Claims</a></li>
+        <li><a href="${pageContext.request.contextPath}/docs/user/ManageUserPayments">Payments</a></li>
+
     </ul>
 </div>
 <div class="logout">

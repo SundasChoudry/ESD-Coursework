@@ -43,7 +43,6 @@ public class UserController extends HttpServlet {
 //            RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
 //            view.forward(request, response);
 //        }
-
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
 
         //Find JSP that refered resource
@@ -63,6 +62,14 @@ public class UserController extends HttpServlet {
             case "/UserMakePayment":
                 makePayment(bean, request);
                 include = "/docs/user/UserPaymentConfirm";
+                break;
+            case "/UserListClaims":
+                listUserTable(bean, request, "Claims");
+                include = "/docs/user/ListUserClaims";
+                break;
+            case "/UserListPayments":
+                listUserTable(bean, request, "payments");
+                include = "/docs/user/ListUserPayments";
                 break;
             default:
                 include = "/docs/Error404.jsp";
@@ -135,10 +142,14 @@ public class UserController extends HttpServlet {
         String rationale = request.getParameter("rationale");
         double amount = Double.parseDouble(request.getParameter("amount"));
         try {
-            temp = getRowNum(bean, "id", "Claims");
-            bean.executeSQLUpdate("INSERT INTO `Claims`(`id`, `mem_id`, `date`, `rationale`, `status`, `amount`) "
-                    + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
-            request.setAttribute("confirm", "succeeded");
+            if (isMember(bean, user)) {
+                temp = getRowNum(bean, "id", "Claims");
+                bean.executeSQLUpdate("INSERT INTO `Claims`(`id`, `mem_id`, `date`, `rationale`, `status`, `amount`) "
+                        + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
+                request.setAttribute("confirm", "succeeded");
+            } else {
+                request.setAttribute("confirm", "failed, not paid member");
+            }
         } catch (SQLException ex) {
             request.setAttribute("confirm", "failed");
             System.out.println("SQL failed to execute in UserController, makeClaim! " + ex);
@@ -150,19 +161,65 @@ public class UserController extends HttpServlet {
     }
 
     public void makePayment(JDBCBean bean, HttpServletRequest request) {
-        ArrayList temp;
+        ArrayList currentBalanceArr, numOfRows;
         String user = request.getParameter("username");
         String paymentType = request.getParameter("paymentType");
-        double amount = Double.parseDouble(request.getParameter("amount"));
+        float amount = Float.parseFloat(request.getParameter("amount"));
         try {
-            temp = getRowNum(bean, "id", "payments");
-            bean.executeSQLUpdate("INSERT INTO `payments`(`id`, `mem_id`, `type_of_payment`, `amount`, `date`) "
-                    + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + paymentType + "'," + amount + ",'" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "')");
-            request.setAttribute("confirm", "succeeded");
+            currentBalanceArr = checkBalance(bean, user);
+            float currentBal = (float) currentBalanceArr.get(0);
+            if (amount <= 0) {
+                request.setAttribute("confirm", "failed, incorrect value");
+            } else if (currentBal >= amount) {
+                numOfRows = getRowNum(bean, "id", "payments");
+                bean.executeSQLUpdate("INSERT INTO `payments`(`id`, `mem_id`, `type_of_payment`, `amount`, `date`) "
+                        + "VALUES (" + ((long) numOfRows.get(0) + 1) + ",'" + user + "','" + paymentType + "'," + amount + ",'" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "')");
+                bean.executeSQLUpdate("UPDATE `Members` SET `balance`=" + (currentBal - amount) + " WHERE id='" + user
+                        + "'");
+                request.setAttribute("confirm", "succeeded");
+            } else {
+                request.setAttribute("confirm", "failed, lack of funds");
+            }
         } catch (SQLException ex) {
             request.setAttribute("confirm", "failed");
             System.out.println("SQL failed to execute in UserController, makePayment! " + ex);
         }
+    }
+
+    private ArrayList checkBalance(JDBCBean bean, String user) {
+        try {
+            return (ArrayList) bean.sqlQueryToArrayList("SELECT `balance` FROM `Members` WHERE id='" + user + "'").get(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    private void listUserTable(JDBCBean bean, HttpServletRequest request, String table) {
+        ArrayList list;
+        try {
+            //SELECT * FROM `payments` WHERE mem_id='t-fisher'
+            list = (ArrayList) bean.sqlQueryToArrayList("SELECT * FROM `" + table + "` WHERE mem_id='" + request.getParameter("username") + "'");
+            request.setAttribute("data", list);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private boolean isMember(JDBCBean bean, String user) {
+//        SELECT Members.id, Members.status FROM Members INNER JOIN users ON Members.status=users.status 
+//        AND Members.id=users.id AND Members.id='t-fisher'
+        ArrayList userStatus;
+        try {
+            userStatus = (ArrayList) bean.sqlQueryToArrayList("SELECT Members.status FROM Members INNER JOIN users ON Members.status=users.status AND Members.id=users.id AND Members.id='" + user + "'").get(0);
+            if (((String) userStatus.get(0)).equals("APPROVED")) {
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        return false;
     }
 
 }

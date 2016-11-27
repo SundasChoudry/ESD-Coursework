@@ -16,7 +16,7 @@
             <input type="number" name="amount">
             <br><br>
             Claim Rationale:<br>
-            <input type="text" name="rationale">
+            <input type="text" name="rationale" maxlength="10">
             <br><br>
             <input type="hidden" name="viewId" value="/UserMakeClaim">
             <input type="hidden" name="username" value="${sessionScope.username}">

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : UserBalance
-    Created on : 25-Nov-2016, 03:12:50
+    Document   : UserClaimForm
+    Created on : 25-Nov-2016, 06:10:55
     Author     : tomfisher
 --%>
 
@@ -10,9 +10,7 @@
 <div class="main">
     <div class="content-screen">
         <div class="title">
-            <c:forEach items="${balance}" var="row" varStatus="rowStatus">
-                <h1>${username}, Your current balance is £${row[0]}</h1>
-            </c:forEach>
+            <h1>Your payment submission has ${confirm}</h1>
         </div>              
     </div>
 </div>
