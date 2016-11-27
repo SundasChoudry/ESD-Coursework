@@ -8,15 +8,14 @@
 <%@ include file="/resources/UserDashboardNavBar.jsp" %>
 
 <div class="content">
-    <h1>Your Claims</h1>
+    <h1>Your Payments</h1>
     <table>
         <tr>
             <th>ID</th>
             <th>Member ID</th>
-            <th>Date</th>
-            <th>Rationale</th>
-            <th>Status</th>
+            <th>Type of Payment</th>
             <th>Amount</th>
+            <th>Date</th>
         </tr>
         <c:forEach items="${data}" var="row" varStatus="rowStatus">
             <tr>

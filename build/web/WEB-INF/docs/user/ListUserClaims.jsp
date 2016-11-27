@@ -18,7 +18,7 @@
             <th>Status</th>
             <th>Amount</th>
         </tr>
-        <c:forEach items="${claims}" var="row" varStatus="rowStatus">
+        <c:forEach items="${data}" var="row" varStatus="rowStatus">
             <tr>
                 <c:forEach items="${row}" var="column" varStatus="columnStatus">
                     <c:choose>

@@ -64,8 +64,12 @@ public class UserController extends HttpServlet {
                 include = "/docs/user/UserPaymentConfirm";
                 break;
             case "/UserListClaims":
-                listClaims(bean, request);
+                listUserTable(bean, request, "Claims");
                 include = "/docs/user/ListUserClaims";
+                break;
+            case "/UserListPayments":
+                listUserTable(bean, request, "payments");
+                include = "/docs/user/ListUserPayments";
                 break;
             default:
                 include = "/docs/Error404.jsp";
@@ -133,7 +137,6 @@ public class UserController extends HttpServlet {
     }
 
     private void makeClaim(JDBCBean bean, HttpServletRequest request) {
-
         ArrayList temp;
         String user = request.getParameter("username");
         String rationale = request.getParameter("rationale");
@@ -145,7 +148,7 @@ public class UserController extends HttpServlet {
                         + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
                 request.setAttribute("confirm", "succeeded");
             } else {
-                request.setAttribute("confirm", "failed, not paid memeber");
+                request.setAttribute("confirm", "failed, not paid member");
             }
         } catch (SQLException ex) {
             request.setAttribute("confirm", "failed");
@@ -192,11 +195,12 @@ public class UserController extends HttpServlet {
         return null;
     }
 
-    private void listClaims(JDBCBean bean, HttpServletRequest request) {
-        ArrayList claims;
+    private void listUserTable(JDBCBean bean, HttpServletRequest request, String table) {
+        ArrayList list;
         try {
-            claims = (ArrayList) bean.sqlQueryToArrayList("SELECT * FROM Claims WHERE mem_id='" + request.getParameter("username") + "'");
-            request.setAttribute("claims", claims);
+            //SELECT * FROM `payments` WHERE mem_id='t-fisher'
+            list = (ArrayList) bean.sqlQueryToArrayList("SELECT * FROM `" + table + "` WHERE mem_id='" + request.getParameter("username") + "'");
+            request.setAttribute("data", list);
         } catch (SQLException ex) {
             Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
