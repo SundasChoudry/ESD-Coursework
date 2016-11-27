@@ -14,7 +14,7 @@
     </context-param>
     <context-param>
         <param-name>JDBC-Password</param-name>
-        <param-value>12345</param-value>
+        <param-value></param-value>
     </context-param>
     <filter>
         <filter-name>UserFilter</filter-name>

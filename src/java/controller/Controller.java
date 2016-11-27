@@ -54,14 +54,8 @@ public class Controller extends HttpServlet {
 
             //Admin
             case "/docs/admin/AdminDashboard":
-                // Check if session is still valid
-                if (session.getAttribute("adminUsername") == null) {
-                    include = "Login.jsp";
-                } else {
-                    include = "admin/AdminDashboard.jsp";
-                }
+                include = "admin/AdminDashboard.jsp";
                 break;
-
             case "/docs/admin/ListMembers":
                 include = "admin/ListMembers.jsp";
                 break;
@@ -89,12 +83,7 @@ public class Controller extends HttpServlet {
 
             //Users
             case "/docs/user/UserDashboard":
-                // Check if session is still valid
-                if (session.getAttribute("username") == null) {
-                    include = "Login.jsp";
-                } else {
-                    include = "user/UserDashboard.jsp";
-                }
+                include = "user/UserDashboard.jsp";
                 break;
 
             case "/docs/user/ManageUserBalance":
