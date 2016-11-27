@@ -159,7 +159,7 @@ public class JDBCBean implements Serializable {
         int numOfColumns = resultSet.getMetaData().getColumnCount();
 
         while (resultSet.next()) {
-             columns = new ArrayList<Object>();
+            columns = new ArrayList<Object>();
             for (int i = 1; i <= numOfColumns; i++) {
                 columns.add(resultSet.getObject(i));
             }
@@ -167,19 +167,19 @@ public class JDBCBean implements Serializable {
         }
         return rows;
     }
-   
+
     
     //Returns results of SQL Query for the given parameter
     public ArrayList sqlQueryToArrayList(String sqlStatement) throws SQLException {
 
         resultSet = executeSQLQuery(sqlStatement);
-        
+
         ArrayList<ArrayList<Object>> rows = new ArrayList<ArrayList<Object>>();
         ArrayList<Object> columns;
         int numOfColumns = resultSet.getMetaData().getColumnCount();
 
         while (resultSet.next()) {
-             columns = new ArrayList<Object>();
+            columns = new ArrayList<Object>();
             for (int i = 1; i <= numOfColumns; i++) {
                 columns.add(resultSet.getObject(i));
             }
