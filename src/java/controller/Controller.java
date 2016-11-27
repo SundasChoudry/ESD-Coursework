@@ -86,7 +86,7 @@ public class Controller extends HttpServlet {
             case "/docs/admin/ManageTurnover":
                 include = "admin/ManageTurnover.jsp";
                 break;
-                
+
             //Users
             case "/docs/user/UserDashboard":
                 // Check if session is still valid
@@ -120,10 +120,19 @@ public class Controller extends HttpServlet {
             case "/docs/user/UserPaymentConfirm":
                 include = "user/UserPaymentConfirm.jsp";
                 break;
-                
+
+            case "/docs/user/ManageUserClaims":
+                include = "user/ManageUserClaims.jsp";
+                break;
+
+            case "/docs/user/ListUserClaims":
+                include = "user/ListUserClaims.jsp";
+                break;
+
             case "/docs/RegistrationSuccessful":
                 include = "RegistrationSuccessful.jsp";
                 break;
+                
             default:
                 include = "/docs/Error404.jsp";
         }

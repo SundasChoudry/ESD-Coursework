@@ -10,7 +10,7 @@
 
 <div class="main">
     <form id="hidden" class="form" action="${pageContext.request.contextPath}/UserController" method="post" style="text-align: center;">
-        <input type="hidden" name="viewId" value="/UserBalance">
+        <input type="hidden" name="viewId" value="/UserListClaims">
         <input type="hidden" name="username" value="${sessionScope.username}">
     </form>
 </div>
