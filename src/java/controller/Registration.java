@@ -6,13 +6,11 @@
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.JDBCBean;
-import model.RegistrationBean;
 
 /**
  *
@@ -42,13 +40,6 @@ public class Registration extends HttpServlet {
         String password = request.getParameter("DOB");
         float memeberFee = 10;
         String status = "APPLIED";
-
-        RegistrationBean registrationBean = new RegistrationBean();
-        registrationBean.setUsername(username);
-        registrationBean.setName(name);
-        registrationBean.setAddress(address);
-        registrationBean.setDob(dob);
-        registrationBean.setDor(dor);
 
         bean.executeSQLUpdate("INSERT INTO `Members`(`id`, `name`, `address`, `dob`, `dor`, `status`, `balance`)"
                 + "VALUES (" + "'" + username + "','" + name + "','" + address + "','" + dob + "','" + dor + "','" + status + "'," + memeberFee + ")");
