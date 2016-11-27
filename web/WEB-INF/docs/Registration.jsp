@@ -10,7 +10,6 @@
             <h1>Registration</h1>
         </div>
         <form class="form" name="login" action="${pageContext.request.contextPath}/Registration" method="post">
-            <input class="control-group" type="text" name="username"  value="" placeholder="Username" required>
             <input class="control-group" type="text" name="name"  value="" placeholder="Name" required>
             <input class="control-group" type="text" name="address"  value="" placeholder="Address" required>
             <input class="control-group" type="text" name="DOB"  value="" placeholder="Date of Birth" required>

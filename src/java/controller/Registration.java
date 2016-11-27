@@ -32,8 +32,13 @@ public class Registration extends HttpServlet {
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
         //boolean Registration = false;
 
-        String username = request.getParameter("username");
+        
         String name = request.getParameter("name");
+        //generating username
+        char initial = name.charAt(0);
+        String[] surname = name.split(" ");
+        String username = (initial + "-" + surname[1]).toLowerCase();
+        
         String address = request.getParameter("address");
         String dob = request.getParameter("DOB");
         String dor = request.getParameter("DOR");
