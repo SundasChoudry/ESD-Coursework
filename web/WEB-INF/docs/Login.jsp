@@ -13,9 +13,10 @@
             <input class="control-group" type="password" name="password" value="" placeholder="Password" required>
             <input class="btn" type="submit" value="Login">
             <input class="btn" type="reset" value="Reset">
-
             <!--Dispaly the error message-->
-            <td><%=(request.getAttribute("ErrorMessage") == null) ? "" : request.getAttribute("ErrorMessage")%>
+            <c:if test="${not empty post}">
+                   ${ErrorMessage}
+            </c:if>       
         </form>
     </div>
 </div>
