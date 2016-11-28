@@ -125,14 +125,10 @@ public class UserController extends HttpServlet {
     }// </editor-fold>
 
     public void getBalance(JDBCBean bean, HttpServletRequest request) {
-        String username = request.getParameter("username");
-        ArrayList balance = new ArrayList();
-        try {
-            balance = bean.sqlQueryToArrayList("SELECT balance FROM `Members` WHERE id='" + username + "'");
-            request.setAttribute("balance", balance);
-        } catch (SQLException ex) {
-            System.out.println("SQL failed to execute in UserController, getBalance! " + ex);
-        }
+        String user = request.getParameter("username");
+        ArrayList currentBalanceArr = checkBalance(bean, user);
+        float currentBal = (float) currentBalanceArr.get(0);
+        request.setAttribute("balance", currentBal);
 
     }
 
@@ -143,10 +139,14 @@ public class UserController extends HttpServlet {
         double amount = Double.parseDouble(request.getParameter("amount"));
         try {
             if (isMember(bean, user)) {
-                temp = getRowNum(bean, "id", "Claims");
-                bean.executeSQLUpdate("INSERT INTO `Claims`(`id`, `mem_id`, `date`, `rationale`, `status`, `amount`) "
-                        + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
-                request.setAttribute("confirm", "succeeded");
+                if (eligibleToClaim(bean, user)) {
+                    temp = getRowNum(bean, "id", "Claims");
+                    bean.executeSQLUpdate("INSERT INTO `Claims`(`id`, `mem_id`, `date`, `rationale`, `status`, `amount`) "
+                            + "VALUES (" + ((long) temp.get(0) + 1) + ",'" + user + "','" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "','" + rationale + "'," + "'SUBMITTED'" + "," + amount + ")");
+                    request.setAttribute("confirm", "succeeded");
+                } else {
+                    request.setAttribute("confirm", "failed, ineligable to make claim");
+                }
             } else {
                 request.setAttribute("confirm", "failed, not paid member");
             }
@@ -168,7 +168,9 @@ public class UserController extends HttpServlet {
         try {
             currentBalanceArr = checkBalance(bean, user);
             float currentBal = (float) currentBalanceArr.get(0);
+            request.setAttribute("balance", currentBal);
             if (amount <= 0) {
+                request.setAttribute("balance", currentBal);
                 request.setAttribute("confirm", "failed, incorrect value");
             } else if (currentBal >= amount) {
                 numOfRows = getRowNum(bean, "id", "payments");
@@ -176,6 +178,7 @@ public class UserController extends HttpServlet {
                         + "VALUES (" + ((long) numOfRows.get(0) + 1) + ",'" + user + "','" + paymentType + "'," + amount + ",'" + new java.sql.Date(Calendar.getInstance().getTime().getTime()) + "')");
                 bean.executeSQLUpdate("UPDATE `Members` SET `balance`=" + (currentBal - amount) + " WHERE id='" + user
                         + "'");
+                request.setAttribute("balance", (currentBal - amount));
                 request.setAttribute("confirm", "succeeded");
             } else {
                 request.setAttribute("confirm", "failed, lack of funds");
@@ -220,6 +223,21 @@ public class UserController extends HttpServlet {
             return false;
         }
         return false;
+    }
+
+    private boolean eligibleToClaim(JDBCBean bean, String user) {
+        try {
+            // SELECT id FROM `Members` WHERE CURDATE() >= DATE_ADD(dor,INTERVAL 6 MONTH)
+            // SELECT count(*) AS YearlyClaimCount FROM `Claims` WHERE mem_id='me-aydin' AND EXTRACT(YEAR FROM date) = EXTRACT(YEAR FROM CURDATE())
+            ArrayList validDor;
+            ArrayList validNumClaims;
+            validDor = (ArrayList) bean.sqlQueryToArrayList("SELECT count(*) FROM `Members` WHERE CURDATE() >= DATE_ADD(dor,INTERVAL 6 MONTH) AND id='" + user + "'").get(0);
+            validNumClaims = (ArrayList) bean.sqlQueryToArrayList("SELECT count(*) FROM `Claims` WHERE mem_id='" + user + "' AND EXTRACT(YEAR FROM date)=EXTRACT(YEAR FROM CURDATE()) AND status='APPROVED'").get(0);
+            return ((long) validDor.get(0) == 1) && (long) validNumClaims.get(0) < 2;
+        } catch (SQLException ex) {
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 
 }
