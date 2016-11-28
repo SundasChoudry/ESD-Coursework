@@ -10,11 +10,15 @@
             <h1>Registration</h1>
         </div>
         <form class="form" name="login" action="${pageContext.request.contextPath}/Registration" method="post">
-            <input class="control-group" type="text" name="name"  value="" placeholder="Name" required>
+            <input class="control-group" type="text" name="fullName"  value="" placeholder="Full Name" required>
             <input class="control-group" type="text" name="address"  value="" placeholder="Address" required>
             <input class="control-group" type="date" name="DOB"  value="" placeholder="Date of Birth" required>
             <input class="btn" type="submit" value="Submit">
             <input class="btn" type="reset" value="Reset">
+            <!--Dispaly the error message-->
+            <c:if test="${not empty post}">
+                ${ErrorMessage}
+            </c:if>
         </form>
     </div>
 </div>
