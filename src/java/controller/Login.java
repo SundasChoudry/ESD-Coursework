@@ -49,12 +49,15 @@ public class Login extends HttpServlet {
         // Checks if the getUsername or password is empty 
         if (username == null || password == null || username.length() == 0 || password.length() == 0) {
             loginValidation = true;
-            errorMessage = "Username and password is required";
+            errorMessage = "<div class=\"error\">\n"
+                    + "  <span class=\"errorMessageBtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span> \n"
+                    + "  <strong>Username and password are required</strong> \n"
+                    + "</div>";
         } else if (requestedUserDetail.isEmpty() || !requestedUserDetail.get(0).get(1).equals(password)) {
             loginValidation = true;
             errorMessage = "<div class=\"error\">\n"
                     + "  <span class=\"errorMessageBtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span> \n"
-                    + "  <strong>Invalid Login details!</strong> \n"
+                    + "  <strong>Invalid Login details</strong> \n"
                     + "</div>";
         } else {
             loginValidation = false;

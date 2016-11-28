@@ -162,21 +162,21 @@ input:focus {
 /* Error message */
 .error {
     padding: 20px;
-    background-color: #FD8F8F;
     color: #FF0000;
+    border: 3px solid #FD8F8F;
+    border-radius: 5px;
 }
 
 .errorMessageBtn {
-    margin-left: 15px;
-    color: white;
+   
+    color: #000000;
     font-weight: bold;
     float: right;
     font-size: 25px;
     line-height: 20px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .errorMessageBtn:hover {
-    color: #000000;
+    color: #FF0000;
 }
