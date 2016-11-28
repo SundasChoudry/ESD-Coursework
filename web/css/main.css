@@ -158,3 +158,25 @@ input:focus {
 .logoutBtn:hover {
     background-color: #2980B9;
 }
+
+/* Error message */
+.error {
+    padding: 20px;
+    background-color: #FD8F8F;
+    color: #FF0000;
+}
+
+.errorMessageBtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 25px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.errorMessageBtn:hover {
+    color: #000000;
+}

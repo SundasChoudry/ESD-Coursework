@@ -52,7 +52,10 @@ public class Login extends HttpServlet {
             errorMessage = "Username and password is required";
         } else if (requestedUserDetail.isEmpty() || !requestedUserDetail.get(0).get(1).equals(password)) {
             loginValidation = true;
-            errorMessage = "Invalid Login details";
+            errorMessage = "<div class=\"error\">\n"
+                    + "  <span class=\"errorMessageBtn\" onclick=\"this.parentElement.style.display='none';\">&times;</span> \n"
+                    + "  <strong>Invalid Login details!</strong> \n"
+                    + "</div>";
         } else {
             loginValidation = false;
         }
@@ -62,7 +65,7 @@ public class Login extends HttpServlet {
             request.setAttribute("ErrorMessage", errorMessage);
             RequestDispatcher view = request.getRequestDispatcher("/docs/Login");
             view.forward(request, response);
-        // If the user is admin redirect to admin page
+            // If the user is admin redirect to admin page
         } else if (requestedUserDetail.get(0).get(2).equals("ADMIN")) {
             //Making it thread safe
             synchronized (session) {
