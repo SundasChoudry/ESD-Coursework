@@ -11,6 +11,7 @@
     <div class="content-screen">
         <div class="title">
             <h1>Your payment submission has ${confirm}</h1>
+            <h2>Your balance is £${balance}</h2>
         </div>              
     </div>
 </div>

@@ -10,9 +10,7 @@
 <div class="main">
     <div class="content-screen">
         <div class="title">
-            <c:forEach items="${balance}" var="row" varStatus="rowStatus">
-                <h1>${username}, Your current balance is £${row[0]}</h1>
-            </c:forEach>
+                <h1>${username}, Your current balance is £${balance}</h1>
         </div>              
     </div>
 </div>
