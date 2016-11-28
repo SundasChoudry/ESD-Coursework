@@ -17,12 +17,10 @@ TODO:
 -----
 - Google address validation service
 
-- Filtering (?)
+- Have two names on register rather than one ?
 
-- Add taglibs (?)
+- Show newly registered user their login and password ?
 
-- Shorten ControllerAdmin/User switch, replace with lookup
+- How is register DOB reversed ?
 
---------------------
-QUESTIONS FOR TUTORS
---------------------
+- User home show all info ?

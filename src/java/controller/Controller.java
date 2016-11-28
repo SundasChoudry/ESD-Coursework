@@ -1,12 +1,12 @@
 package controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 //@author Nate
 @WebServlet(name = "Controller", urlPatterns = {"/Controller", "/docs/*"})
@@ -23,8 +23,9 @@ public class Controller extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //Get session attribute
-        HttpSession session = request.getSession();
+
+        //Get the valid pages that can be forwarded too
+        HashMap validPages = (HashMap) getServletContext().getAttribute("ValidPages");
 
         //Always Forward to main.jsp
         String mainPage = "/WEB-INF/docs/main.jsp";
@@ -34,105 +35,12 @@ public class Controller extends HttpServlet {
 
         getServletContext().log("Controller received a request for " + requestPath);
 
-        //Resource to include
-        String include;
-        switch (requestPath) {
-
-            case "/Controller":
-                include = "mainStart.jsp";
-                break;
-
-            //Login
-            case "/docs/Login":
-                include = "Login.jsp";
-                break;
-
-            //Registration
-            case "/docs/Registration":
-                include = "Registration.jsp";
-                break;
-
-            //Admin
-            case "/docs/admin/AdminDashboard":
-                include = "admin/AdminDashboard.jsp";
-                break;
-            case "/docs/admin/ListMembers":
-                include = "admin/ListMembers.jsp";
-                break;
-            case "/docs/admin/ListBalance":
-                include = "admin/ListBalance.jsp";
-                break;
-            case "/docs/admin/ManageMember":
-                include = "admin/ManageMember.jsp";
-                break;
-            case "/docs/admin/ListClaims":
-                include = "admin/ListClaims.jsp";
-                break;
-            case "/docs/admin/ManageClaim":
-                include = "admin/ManageClaim.jsp";
-                break;
-            case "/docs/admin/ListApplications":
-                include = "admin/ListApplications.jsp";
-                break;
-            case "/docs/admin/ManageApplication":
-                include = "admin/ManageApplication.jsp";
-                break;
-            case "/docs/admin/ManageTurnover":
-                include = "admin/ManageTurnover.jsp";
-                break;
-
-            //Users
-            case "/docs/user/UserDashboard":
-                include = "user/UserDashboard.jsp";
-                break;
-
-            case "/docs/user/ManageUserBalance":
-                include = "user/ManageUserBalance.jsp";
-                break;
-
-            case "/docs/user/UserBalance":
-                include = "user/UserBalance.jsp";
-                break;
-
-            case "/docs/user/UserMakeClaim":
-                include = "user/UserClaimForm.jsp";
-                break;
-
-            case "/docs/user/UserClaimConfirm":
-                include = "user/UserClaimConfirm.jsp";
-                break;
-
-            case "/docs/user/UserMakePayment":
-                include = "user/UserPaymentForm.jsp";
-                break;
-
-            case "/docs/user/UserPaymentConfirm":
-                include = "user/UserPaymentConfirm.jsp";
-                break;
-
-            case "/docs/user/ManageUserClaims":
-                include = "user/ManageUserClaims.jsp";
-                break;
-
-            case "/docs/user/ListUserClaims":
-                include = "user/ListUserClaims.jsp";
-                break;
-
-            case "/docs/user/ManageUserPayments":
-                include = "user/ManageUserPayments.jsp";
-                break;
-
-            case "/docs/user/ListUserPayments":
-                include = "user/ListUserPayments.jsp";
-                break;
-
-            case "/docs/RegistrationSuccessful":
-                include = "RegistrationSuccessful.jsp";
-                break;
-
-            default:
-                include = "/docs/Error404.jsp";
+        //Resource to include defaults to error
+        String include = "/docs/Error404.jsp";
+        if (validPages.containsKey(requestPath)) {
+            include = (String) validPages.get(requestPath);
         }
+
         request.setAttribute("included", include);
 
         request.getRequestDispatcher(mainPage).forward(request, response);
