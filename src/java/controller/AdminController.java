@@ -189,7 +189,6 @@ public class AdminController extends HttpServlet {
         if (action.equalsIgnoreCase("approve")) {
             bean.executeSQLUpdate("UPDATE members SET status='APPROVED' WHERE id='" + memberID + "'");
             bean.executeSQLUpdate("UPDATE users SET status='APPROVED' WHERE id='" + memberID + "'");
-            bean.executeSQLUpdate("UPDATE members SET balance=balance - " + 10.0 + " WHERE id='" + memberID + "'");
         } else if (action.equalsIgnoreCase("reject")) {
             bean.executeSQLUpdate("UPDATE members SET status='REJECTED' WHERE id='" + memberID + "'");
             bean.executeSQLUpdate("UPDATE users SET status='REJECTED' WHERE id='" + memberID + "'");
