@@ -6,6 +6,9 @@
 package controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,24 +35,25 @@ public class Registration extends HttpServlet {
         JDBCBean bean = (JDBCBean) getServletContext().getAttribute("JDBCBean");
         //boolean Registration = false;
 
-        
         String name = request.getParameter("name");
         //generating username
         char initial = name.charAt(0);
         String[] surname = name.split(" ");
         String username = (initial + "-" + surname[1]).toLowerCase();
-        
         String address = request.getParameter("address");
         String dob = request.getParameter("DOB");
-        String dor = request.getParameter("DOR");
-        String password = request.getParameter("DOB");
-        float memeberFee = 10;
-        String status = "APPLIED";
+        //DOR to current date in YYYY-MM-DD format
+        SimpleDateFormat sqlDateFormatForRegistration = new SimpleDateFormat("yyyy-MM-dd");
+        String dor = sqlDateFormatForRegistration.format(Calendar.getInstance().getTime());
+        //password in DDMMYY format
+        String password = request.getParameter("DOB").replaceAll("(..)(..)-(..)-(..)", "$4$3$2");
+        float RegistrationFee = 10;
+        String defaultStatus = "APPLIED";
 
         bean.executeSQLUpdate("INSERT INTO `Members`(`id`, `name`, `address`, `dob`, `dor`, `status`, `balance`)"
-                + "VALUES (" + "'" + username + "','" + name + "','" + address + "','" + dob + "','" + dor + "','" + status + "'," + memeberFee + ")");
+                + "VALUES (" + "'" + username + "','" + name + "','" + address + "','" + dob + "','" + dor + "','" + defaultStatus + "'," + RegistrationFee + ")");
         bean.executeSQLUpdate("INSERT INTO `users`(`id`, `password`, `status`)"
-                + "VALUES (" + "'" + username + "','" + password + "','" + status + "'" + ")");
+                + "VALUES (" + "'" + username + "','" + password + "','" + defaultStatus + "'" + ")");
 
         request.getRequestDispatcher("/docs/RegistrationSuccessful").forward(request, response);
     }
