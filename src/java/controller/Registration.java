@@ -6,11 +6,8 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -53,7 +50,13 @@ public class Registration extends HttpServlet {
             view.forward(request, response);
         } else {
             String username = (initial + "-" + names[1]).toLowerCase();
-            String address = request.getParameter("address");
+            String streetNumber = request.getParameter("streetNumber");
+            String streetName = request.getParameter("streetName");
+            String city = request.getParameter("city");
+            String postcode = request.getParameter("postcode");
+            String country = request.getParameter("country");
+
+            String address = streetNumber + ", " + streetName + ", " + city + ", " + postcode + ", " + country;
             String dob = request.getParameter("DOB");
             //DOR to current date in YYYY-MM-DD format
             SimpleDateFormat sqlDateFormatForRegistration = new SimpleDateFormat("yyyy-MM-dd");
