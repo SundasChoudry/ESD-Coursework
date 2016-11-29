@@ -80,8 +80,33 @@ th:first-child {
 .form {
     text-align: center;
 }
+
 .control-group {
     margin-bottom: 10px;
+}
+
+.input-label{
+    width: 100%;
+    text-align: left;
+    padding-left: 7px;
+    margin-bottom: 5px;
+}
+
+label{
+    font-weight: bold;
+    font-size: 16px;
+    color: #777777;
+}
+
+.houseNumber{
+    width: 50px;
+    float: left;
+    margin-left: 5px;
+}
+
+.streetname{
+    width: 190px;
+    margin-bottom: 5px;
 }
 
 input {
@@ -135,7 +160,7 @@ input:focus {
     position: fixed;
     z-index: 100;
     top: 20px;
-    left: 92%; 
+    left: 90%; 
 }
 
 .logoutBtn {

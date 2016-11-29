@@ -8,7 +8,6 @@ package controller;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +38,7 @@ public class Registration extends HttpServlet {
         String name = firstName + " " + lastName;
         //generating username
         String username = (firstName.charAt(0) + "-" + lastName).toLowerCase();
-        String streetNumber = request.getParameter("streetNumber");
+        String streetNumber = request.getParameter("houseNumber");
         String streetName = request.getParameter("streetName");
         String city = request.getParameter("city");
         String postcode = request.getParameter("postcode");
